@@ -1,0 +1,58 @@
+  1 2 3 4 5 6 7 8
+A|_|_|_|_|_|_|_|_|
+B|_|_|_|_|_|_|_|_|
+C|_|_|_|_|_|_|_|_|
+D|_|_|_|_|_|_|_|_|
+E|_|_|_|_|_|_|_|_|
+F|_|_|_|_|_|_|_|_|
+G|_|_|_|_|_|_|_|_|
+H|_|_|_|_|_|_|_|_|
+
+
+  1 2 3 4 5 6 7 8
+A|-|-|-|-|-|-|-|-|
+B|-|-|-|-|-|-|-|-|
+C|-|-|-|-|-|-|-|-|
+D|-|-|-|-|-|-|-|-|
+E|-|-|-|-|-|-|-|-|
+F|-|-|-|-|-|-|-|-|
+G|-|-|-|-|-|-|-|-|
+H|-|-|-|-|-|-|-|-|
+
+  1 2 3 4 5 6 7 8
+A|_|1|o|-|-|-|-|-|
+B|1|2|1|-|-|-|-|-|
+C|f|1|_|-|-|-|-|-|
+D|-|-|-|-|-|-|-|-|
+E|-|-|-|-|-|-|-|-|
+F|-|-|-|-|-|-|-|-|
+G|-|-|-|-|-|-|-|-|
+H|-|-|-|-|-|-|-|-|
+
+
+
+Farbcodierung:
+
+#include <stdio.h>
+
+#define RED   "\x1B[31m"
+#define GRN   "\x1B[32m"
+#define YEL   "\x1B[33m"
+#define BLU   "\x1B[34m"
+#define MAG   "\x1B[35m"
+#define CYN   "\x1B[36m"
+#define WHT   "\x1B[37m"
+#define RESET "\x1B[0m"
+
+int main() {
+  printf(RED "red\n" RESET);
+  printf("Hallo\n");
+  printf(GRN "green\n"   RESET);
+  printf(YEL "yellow\n"  RESET);
+  printf(BLU "blue\n"    RESET);
+  printf(MAG "magenta\n" RESET);
+  printf(CYN "cyan\n"    RESET);
+  printf(WHT "white\n"   RESET);
+
+  return 0;
+}
