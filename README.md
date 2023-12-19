@@ -27,3 +27,7 @@ Die Zeit und die Anzahl der Befehle soll in einer Textdatei gespeichert werden. 
         1.1 Beginner 8x8
         1.2 Intermediate 16x16
         1.3 Expert 30x16
+        1.4 User -defined 
+        >[!CAUTION]
+        >MAX_ = x/y * 3 + 2
+        
