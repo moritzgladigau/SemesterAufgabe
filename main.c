@@ -11,18 +11,23 @@
 #define MAX_COLS 50
 #define MAX_ROWS 50
 
+int x_map_size = 0;
+int y_map_size = 0;
+float percent_mines = 0;
+
 /* Hier wird das Spiel erklärt. */
 void spiel_anleitung();
 void flush();
 void levels_of_difficulty();
-int create_map(int x_map_size, int y_map_size, int percent_mines);
+int create_map(char map[MAX_COLS][MAX_ROWS]);
+void print_map(char map[MAX_COLS][MAX_COLS]);
 
 int main()
 {       
-        int x_map_size = 0, y_map_size = 0;
+        
         char game_map[MAX_COLS][MAX_ROWS];
         char comparison_map[MAX_COLS][MAX_ROWS];
-        float percent_mines = 0;
+        
         int choice;
 
         /* Game */
@@ -93,6 +98,10 @@ int main()
                 } 
         } while (choice != 5);
         
+        create_map(game_map);
+        print_map(game_map);
+
+
         return 0;
 }
 
@@ -121,4 +130,40 @@ void levels_of_difficulty()
         printf("3. Expert\n");
         printf("4. User -defined\n");
         printf("5. Exit/ Help\n");
+}
+
+int create_map(char map[MAX_COLS][MAX_ROWS])
+{
+        int i, j;
+        x_map_size = (x_map_size * 3 + 1);
+        
+        for (i = 0; i <= y_map_size; i++) {
+                for (j = 0; j <= x_map_size + 1; j++) {
+                        if ((i == 0 && j == 0) || (i == y_map_size && j == x_map_size)) {
+                                map[i][j] = '/';
+                        } else if ((i == 0 && j == x_map_size) || (i == y_map_size && j == 0)) {
+                                map[i][j] = '\\';
+                        } else if (i == 0 || i == y_map_size) {
+                                map[i][j] = '-';
+                        } else if (j == 0 || j == x_map_size) {
+                                map[i][j] = '|';
+                        } else if (j % 3 == 2) {
+                                map[i][j] = '-';
+                        } else {
+                                map[i][j] = ' ';
+                        }
+                }
+        }
+        return 0;
+}
+
+void print_map(char map[MAX_COLS][MAX_COLS])
+{
+        int i, j;
+        for (i = 0; i <= y_map_size; i++) {
+                for (j = 0; j <= x_map_size; j++) {
+                        printf("%c", map[i][j]);
+                }
+                printf("\n");
+        }
 }
