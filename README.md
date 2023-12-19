@@ -18,3 +18,12 @@ Es soll das Spiel Minesweeper1 implementiert werden, das ausschließlich auf der
 **Freiwillige Zusatzaufgaben**
 
 Die Zeit und die Anzahl der Befehle soll in einer Textdatei gespeichert werden. Der Benutzer soll die Mo ̈glichkeit erhalten, sich anhand dieser Daten eine Bestenliste anzeigen zu lassen.
+
+## Ideen
+
+### Mögliche Aufbau des Spieles
+
+    1. Spiel Feld Größe
+        1.1 Beginner 8x8
+        1.2 Intermediate 16x16
+        1.3 Expert 30x16
