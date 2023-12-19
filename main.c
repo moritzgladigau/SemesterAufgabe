@@ -8,8 +8,9 @@
 #define ERROR 0
 #define SUCCSES 1
 
-#define MAX_COLS 50
-#define MAX_ROWS 50
+/* !WICHTIG Mindestanzahl muss (x/y * 3 +2) */
+#define MAX_COLS 92 
+#define MAX_ROWS 92
 
 int x_map_size = 0;
 int y_map_size = 0;
@@ -70,15 +71,15 @@ int main()
                         case 4:
                                 printf("You play: User -defined\n");
                                 do{
-                                        printf("Gebe die Anzahl der Reihen (max. %i) an: ", MAX_COLS);
+                                        printf("Gebe die Anzahl der Reihen (max. %i) an: ", (MAX_COLS-2)/3);
                                         scanf("%i", &x_map_size);
                                         flush();
-                                } while (x_map_size > MAX_COLS);
+                                } while (x_map_size > (MAX_COLS-2)/3);
                                 do{
-                                        printf("Gebe die Anzahl der Spalten (max. %i) an: ", MAX_ROWS);
+                                        printf("Gebe die Anzahl der Spalten (max. %i) an: ", (MAX_ROWS-2)/3);
                                         scanf("%i", &y_map_size);
                                         flush();
-                                } while (y_map_size > MAX_ROWS);
+                                } while (y_map_size > (MAX_ROWS-2)/3);
                                 do{
                                         printf("Gebe die Minendichte (min. 1%%, max. 99%%) an: ");
                                         scanf("%f", &percent_mines);
@@ -135,10 +136,10 @@ void levels_of_difficulty()
 int create_map(char map[MAX_COLS][MAX_ROWS])
 {
         int i, j;
-        x_map_size = (x_map_size * 3 + 1);
+        x_map_size = (x_map_size * 3 + 1); /* Desing Tchnisch wird hier x_map modifiziert damit der kopf so aussehen kann /--- ... ---\ und immer in der Mitte von den 3 strichen das eigentliche feld ist. */
         
         for (i = 0; i <= y_map_size; i++) {
-                for (j = 0; j <= x_map_size + 1; j++) {
+                for (j = 0; j <= x_map_size; j++) {
                         if ((i == 0 && j == 0) || (i == y_map_size && j == x_map_size)) {
                                 map[i][j] = '/';
                         } else if ((i == 0 && j == x_map_size) || (i == y_map_size && j == 0)) {
