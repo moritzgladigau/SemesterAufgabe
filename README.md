@@ -43,4 +43,6 @@ Die Zeit und die Anzahl der Befehle soll in einer Textdatei gespeichert werden. 
         4.3 Flag -> Feld mit einer Flagge versehen. (Eine Flagge schützt ein Feld davor aufgedekt zu werden.)
 >[!CAUTION]
 >1.4 User -defined:  MAX_ = x/y * 3 + 2  => x/y = (MAX_ - 2) / 3
+
+![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](/Users/moritzgladigau/Documents/GitHub/SemesterAufgabe/Minensweepers.jpeg)
         
