@@ -5,29 +5,25 @@
 #include <string.h>
 #include <stdlib.h>
 
+
 #define ERROR 0
 #define SUCCSES 1
 
 /* !WICHTIG Mindestanzahl muss (x/y * 3 +2) */
-#define MAX_COLS 92 
-#define MAX_ROWS 92
+#define MAX_WIDTH 92 
+#define MAX_HEIGHT 92
 
-int x_map_size = 0;
-int y_map_size = 0;
-float percent_mines = 0;
 
 /* Hier wird das Spiel erklärt. */
-void spiel_anleitung();
-void flush();
-void levels_of_difficulty();
-int create_map(char map[MAX_COLS][MAX_ROWS]);
-void print_map(char map[MAX_COLS][MAX_COLS]);
+void spiel_anleitung(void);
+void flush(void);
+void levels_of_difficulty(void);
 
-int main()
+int main(void)
 {       
-        
-        char game_map[MAX_COLS][MAX_ROWS];
-        char comparison_map[MAX_COLS][MAX_ROWS];
+        int width = 0;
+        int height = 0;
+        float percent_mines = 0;
         
         int choice;
 
@@ -46,24 +42,24 @@ int main()
                 switch (choice) {
                         case 1:
                                 printf("You play: Beginner\n");
-                                x_map_size=8;
-                                y_map_size=8;
+                                width=8;
+                                height=8;
                                 percent_mines=15.6;
                                 printf("\tMap size will be set to 8x8.\n");
                                 printf("\tThe mine percentage is fixed at 15,6%%.\n");
                                 break;
                         case 2:
                                 printf("You play: Intermediate\n");
-                                x_map_size=16;
-                                y_map_size=16;
+                                width=16;
+                                height=16;
                                 percent_mines=15.6;
                                 printf("\tMap size will be set to 16x16.\n");
                                 printf("\tThe mine percentage is fixed at 15.6%%.\n");
                                 break;
                         case 3:
                                 printf("You play: Expert\n");
-                                x_map_size=30;
-                                y_map_size=16;
+                                width=30;
+                                height=16;
                                 percent_mines=20.6;
                                 printf("\tMap size will be set to 16x16.\n");
                                 printf("\tThe mine percentage is fixed at 20.6%%.\n");
@@ -71,42 +67,38 @@ int main()
                         case 4:
                                 printf("You play: User -defined\n");
                                 do{
-                                        printf("Gebe die Anzahl der Reihen (max. %i) an: ", (MAX_COLS-2)/3);
-                                        scanf("%i", &x_map_size);
+                                        printf("Enter the number of rows (max. %i):", (MAX_WIDTH-2)/3);
+                                        scanf("%i", &width);
                                         flush();
-                                } while (x_map_size > (MAX_COLS-2)/3);
+                                } while (width > (MAX_WIDTH-2)/3);
                                 do{
-                                        printf("Gebe die Anzahl der Spalten (max. %i) an: ", (MAX_ROWS-2)/3);
-                                        scanf("%i", &y_map_size);
+                                        printf("Enter the number of columns (max. %i):", (MAX_HEIGHT-2)/3);
+                                        scanf("%i", &height);
                                         flush();
-                                } while (y_map_size > (MAX_ROWS-2)/3);
+                                } while (height > (MAX_HEIGHT-2)/3);
                                 do{
-                                        printf("Gebe die Minendichte (min. 1%%, max. 99%%) an: ");
+                                        printf("Add the min density (min. 1 %%, max. 99 %%):");
                                         scanf("%f", &percent_mines);
                                         flush();
                                 } while (percent_mines < 1 || percent_mines > 99);
-                                printf("\tMap size will be set to %ix%i.\n", x_map_size, y_map_size);
+                                printf("\tMap size will be set to %ix%i.\n", width, height);
                                 printf("\tThe mine percentage is fixed at %.1f%%.\n", percent_mines);
                                 break;
                         case 5:
                                 system("clear");
                                 printf("\nExiting the menu.\n");
-                                printf("\tMap size will be set to %ix%i.\n", x_map_size, y_map_size);
+                                printf("\tMap size will be set to %ix%i.\n", width, height);
                                 printf("\tThe mine percentage is fixed at %.1f%%.\n", percent_mines);
                                 break;
                         default:
                                 printf("Invalid choice. Please enter a number between 1 and 4.\n");
                 } 
         } while (choice != 5);
-        
-        create_map(game_map);
-        print_map(game_map);
-
 
         return 0;
 }
 
-void spiel_anleitung()
+void spiel_anleitung(void)
 {
         printf("\n==================================================================================\n");
         printf("|| Gebe die Adresse eines Feldes ein,\t\t\t\t\t\t||\n||\twelche sich aus einem <Groß_Buchstaben> und einer <Zahl> zusammenstezt.\t||\n");
@@ -117,13 +109,13 @@ void spiel_anleitung()
         printf("\n");
 }
 
-void flush()
+void flush(void)
 {
         char c;
         while ((c = getchar()) != EOF && c != '\n');
 }
 
-void levels_of_difficulty()
+void levels_of_difficulty(void)
 {
         printf("Select a degree of prison:\n");
         printf("1. Beginner\n");
@@ -133,38 +125,3 @@ void levels_of_difficulty()
         printf("5. Exit/ Help\n");
 }
 
-int create_map(char map[MAX_COLS][MAX_ROWS])
-{
-        int i, j;
-        x_map_size = (x_map_size * 3 + 1); /* Desing Tchnisch wird hier x_map modifiziert damit der kopf so aussehen kann /--- ... ---\ und immer in der Mitte von den 3 strichen das eigentliche feld ist. */
-        
-        for (i = 0; i <= y_map_size; i++) {
-                for (j = 0; j <= x_map_size; j++) {
-                        if ((i == 0 && j == 0) || (i == y_map_size && j == x_map_size)) {
-                                map[i][j] = '/';
-                        } else if ((i == 0 && j == x_map_size) || (i == y_map_size && j == 0)) {
-                                map[i][j] = '\\';
-                        } else if (i == 0 || i == y_map_size) {
-                                map[i][j] = '-';
-                        } else if (j == 0 || j == x_map_size) {
-                                map[i][j] = '|';
-                        } else if (j % 3 == 2) {
-                                map[i][j] = '-';
-                        } else {
-                                map[i][j] = ' ';
-                        }
-                }
-        }
-        return 0;
-}
-
-void print_map(char map[MAX_COLS][MAX_COLS])
-{
-        int i, j;
-        for (i = 0; i <= y_map_size; i++) {
-                for (j = 0; j <= x_map_size; j++) {
-                        printf("%c", map[i][j]);
-                }
-                printf("\n");
-        }
-}
