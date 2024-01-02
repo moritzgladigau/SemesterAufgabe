@@ -1,9 +1,11 @@
 /* Hier werde ich jz sachen Testen ob DU wilst oder nicht!!! :P */
 
+#include "the-game.h"
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 
 
 #define ERROR 0
@@ -24,8 +26,11 @@ int main(void)
         int width = 0;
         int height = 0;
         float percent_mines = 0;
-        
         int choice;
+
+        char **game_field;
+        char **controle_field;
+        srand(time(NULL));
 
         /* Game */
         printf("Hello World!\n");
@@ -94,6 +99,15 @@ int main(void)
                                 printf("Invalid choice. Please enter a number between 1 and 4.\n");
                 } 
         } while (choice != 5);
+
+        controle_field = field_init(width, height);
+        place_a_mine(controle_field, percent_mines, width, height);
+        place_numbers(controle_field, width, height);
+
+        game_field = field_init(width, height);
+        fill_field(game_field, width, height);
+
+        print_field(game_field, width, height);
 
         return 0;
 }
