@@ -1,6 +1,7 @@
 /* Hier werde ich jz sachen Testen ob DU wilst oder nicht!!! :P */
 
 #include "the-game.h"
+#include "userinput.h"
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
@@ -15,18 +16,21 @@
 #define MAX_WIDTH 92 
 #define MAX_HEIGHT 92
 
+int number_of_used_flags;
 
 /* Hier wird das Spiel erklärt. */
 void spiel_anleitung(void);
 void flush(void);
 void levels_of_difficulty(void);
 
+
 int main(void)
 {       
         int width = 0;
         int height = 0;
         float percent_mines = 0;
-        int choice;
+        int choice, move = 0;
+        int curser[] = {0, 0};
 
         char **game_field;
         char **controle_field;
@@ -52,6 +56,7 @@ int main(void)
                                 percent_mines=15.6;
                                 printf("\tMap size will be set to 8x8.\n");
                                 printf("\tThe mine percentage is fixed at 15,6%%.\n");
+                                flush();
                                 break;
                         case 2:
                                 printf("You play: Intermediate\n");
@@ -60,6 +65,7 @@ int main(void)
                                 percent_mines=15.6;
                                 printf("\tMap size will be set to 16x16.\n");
                                 printf("\tThe mine percentage is fixed at 15.6%%.\n");
+                                flush();
                                 break;
                         case 3:
                                 printf("You play: Expert\n");
@@ -68,6 +74,7 @@ int main(void)
                                 percent_mines=20.6;
                                 printf("\tMap size will be set to 16x16.\n");
                                 printf("\tThe mine percentage is fixed at 20.6%%.\n");
+                                flush();
                                 break;
                         case 4:
                                 printf("You play: User -defined\n");
@@ -94,9 +101,11 @@ int main(void)
                                 printf("\nExiting the menu.\n");
                                 printf("\tMap size will be set to %ix%i.\n", width, height);
                                 printf("\tThe mine percentage is fixed at %.1f%%.\n", percent_mines);
+                                flush();
                                 break;
                         default:
                                 printf("Invalid choice. Please enter a number between 1 and 4.\n");
+                                flush();
                 } 
         } while (choice != 5);
 
@@ -107,7 +116,30 @@ int main(void)
         game_field = field_init(width, height);
         fill_field(game_field, width, height);
 
-        print_field(game_field, width, height);
+        number_of_used_flags = total_number_of_mine;
+
+        while (check_if_done(game_field, controle_field, width, height) == CONTINUE)
+        {
+                print_field(game_field, width, height, curser);
+                move = curser_move(width, height, curser);
+                /* printf("%i", move); */
+                if (move == 'f'){
+                        if (game_field[curser[1]][curser[0]] != 'f' && number_of_used_flags > 0) {
+                                game_field[curser[1]][curser[0]] = 'f';
+                                number_of_used_flags--;
+                        } else {
+                                game_field[curser[1]][curser[0]] = '-';
+                                number_of_used_flags++;
+                        }
+                }
+                if (game_field[curser[1]][curser[0]] != 'f' && move == 'a'){
+                        game_field[curser[1]][curser[0]] = (controle_field[curser[1]][curser[0]] == '0') ? ' ' : controle_field[curser[1]][curser[0]];
+                }
+                if (move == 'q'){
+                        break;
+                }
+        }
+        print_field(game_field, width, height, curser);
 
         return 0;
 }

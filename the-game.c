@@ -1,5 +1,6 @@
 #include "the-game.h"
 
+int total_number_of_mine = 0;
 
 /* Initicialies of the storage space for the Game and Controle field */
 char **field_init(int width, int height)
@@ -30,16 +31,18 @@ int place_a_mine(char **field, int perpercent_mines, int width, int height)
 {
     int x, y;
     int number_of_fields = width * height;
-    int total_number_of_mine = floor(number_of_fields * perpercent_mines / 100) + 1;
+    int count_number_of_mine;
+    total_number_of_mine = floor(number_of_fields * perpercent_mines / 100) + 1;
+    count_number_of_mine = total_number_of_mine;
     printf("Number of field: %i\n", number_of_fields);
     printf("Number of mine: %i\n", total_number_of_mine);
-    while (total_number_of_mine > 0)
+    while (count_number_of_mine > 0)
     {
         x = (rand() % width + 1) - 1;
         y = (rand() % height + 1) - 1;
         if (field[x][y] != MINE){
             field[x][y] = MINE;
-            total_number_of_mine--;
+            count_number_of_mine--;
         }
     }
     return EXIT_SUCCESS;
@@ -90,7 +93,7 @@ int fill_field(char **field, int width, int height) {
         return EXIT_SUCCESS;
 }
 
-void print_field(char **field, int width, int height)
+void print_field(char **field, int width, int height, int curser[])
 {
         int i, j;
         for (i = -1; i <= height; i++) {
@@ -102,7 +105,17 @@ void print_field(char **field, int width, int height)
                         if (i == -1 || i == height) {
                                 printf("===");  /* Print horizontal border */
                         } else {
-                                printf(" %c ", (i >= 0 && i < height && j >= 0 && j < width) ? field[i][j] : ' ');
+                                if (i >= 0 && i < height && j >= 0 && j < width) {
+                                        if (i == curser[1] && j == curser[0]) {
+                                                printf("[%c]", field[i][j]);
+                                        } else {
+                                                printf(" %c ", field[i][j]);
+                                        }
+                                } else {
+                                        printf("   ");
+                                }
+                                
+                                /* printf(" %c ", (i >= 0 && i < height && j >= 0 && j < width) ? field[i][j] : ' '); */
                         }
 
                         if (j == width - 1) {
@@ -111,5 +124,34 @@ void print_field(char **field, int width, int height)
                 }
                 printf("\n");
         }
+}
 
+int check_if_done(char **afield, char **cfield, int width, int height)
+{
+        int i, j, a, c;
+        int result = CONTINUE;
+        int founden_mines = 0;
+        for (i = 0; i < width; i++)
+        {
+            for (j = 0; j < height; j++) {
+                a = afield[i][j];
+                c = cfield[i][j];
+
+                if (c == MINE && a == 'f') {
+                    printf("WIN\n");
+                    founden_mines++;
+                    if (founden_mines == total_number_of_mine) {
+                            return WIN;
+                    }
+                } else if (c == MINE && a == MINE) {
+                    printf("\nLOSE\n");
+                    return LOSE;
+                } else {
+                    result = CONTINUE;
+                }
+            }
+        }
+
+        printf("CONTINUE\n");
+        return result;
 }
