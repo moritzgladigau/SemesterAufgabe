@@ -29,7 +29,7 @@ int handle_arrow_keys(int input, int curser[], int width, int height) {
             curser[0]--;
             break;
         default:
-            return 0;  // Not an arrow key
+            return 0;   /* Not an arrow key */
     }
 
     if (curser[1] >= height) {
@@ -45,7 +45,7 @@ int handle_arrow_keys(int input, int curser[], int width, int height) {
         curser[0] = width - 1;
     }
 
-    return 1;  // Arrow key handled
+    return 1;    /*  Arrow key handled */
 }
 
 int curser_move(int width, int height, int curser[]) {
@@ -66,7 +66,7 @@ int curser_move(int width, int height, int curser[]) {
 
             if (result) {
                 return 0;
-                // Arrow key handled
+                /* Arrow key handled */
             } 
         }
         if (input == F_KEY) {

@@ -21,6 +21,7 @@ int number_of_used_flags;
 /* Hier wird das Spiel erklärt. */
 void spiel_anleitung(void);
 void flush(void);
+
 void levels_of_difficulty(void);
 
 
@@ -124,22 +125,25 @@ int main(void)
                 move = curser_move(width, height, curser);
                 /* printf("%i", move); */
                 if (move == 'f'){
-                        if (game_field[curser[1]][curser[0]] != 'f' && number_of_used_flags > 0) {
+                        printf("NoF: %i\n", number_of_used_flags);
+                        if (game_field[curser[1]][curser[0]] != 'f' && game_field[curser[1]][curser[0]] != ' ' && number_of_used_flags > 0) {
                                 game_field[curser[1]][curser[0]] = 'f';
                                 number_of_used_flags--;
-                        } else {
+                        } else if (game_field[curser[1]][curser[0]] == 'f') {
                                 game_field[curser[1]][curser[0]] = '-';
                                 number_of_used_flags++;
                         }
                 }
                 if (game_field[curser[1]][curser[0]] != 'f' && move == 'a'){
                         game_field[curser[1]][curser[0]] = (controle_field[curser[1]][curser[0]] == '0') ? ' ' : controle_field[curser[1]][curser[0]];
+                        print_field(game_field, width, height, curser);
+                        open_surrounding(game_field, controle_field, width, height, curser);
                 }
                 if (move == 'q'){
                         break;
                 }
         }
-        print_field(game_field, width, height, curser);
+        print_field(controle_field, width, height, curser);
 
         return 0;
 }

@@ -155,3 +155,125 @@ int check_if_done(char **afield, char **cfield, int width, int height)
         printf("CONTINUE\n");
         return result;
 }
+
+
+
+/* NOT DOON */
+
+void open_surrounding(char **afield, char **cfield, int width, int height, int curser[])
+{
+        int i, j, x = curser[1], y = curser[0];
+        /* Reset curser posion to check Quadrant down and to the right */
+        /* Iterate over columns */
+        for (j = 0; j < width; j++) {
+                /* Iterate over rows */
+                for (i = 0; i < height; i++) {
+                        open(afield, cfield, width, height, x, y);
+
+                        /* Increment x to move to the next row (only goes down) */
+                        if (x < height - 1){
+                                x++;
+                        }
+                                
+
+                }
+                x = curser[1];
+                /* Increment y to move to the next columns (only goes right) */
+                if (y < width - 1){
+                        y++;
+                }
+        }
+        /* Reset curser posion to check Quadrant above and to the right */
+        x = curser[1];
+        y = curser[0];
+
+        /* Iterate over columns */
+        for (j = 0; j < width; j++) {
+                /* Iterate over rows */
+                for (i = 0; i < height; i++) {
+                        open(afield, cfield, width, height, x, y);
+                        /* Decrement x to move to the next row (only goes up) */
+                        if (x > 0){
+                                x--;
+                        }
+                        
+                }
+                x = curser[1];
+                /* Increment y to move to the next columns (only goes right) */
+                if (y < width - 1){
+                        y++;
+                }
+        }
+        /* Reset curser posion to check Quadrant above and to the left */
+        x = curser[1];
+        y = curser[0];
+
+        /* Iterate over columns */
+        for (j = 0; j < width; j++) {
+                /* Iterate over rows */
+                for (i = 0; i < height; i++) {
+                        open(afield, cfield, width, height, x, y);
+                        /* Decrement x to move to the next row (only goes up) */
+                        if (x > 0){
+                                x--;
+                        }
+                        
+                }
+                x = curser[1];
+                /* Increment y to move to the next columns (only goes left) */
+                if (y > 0){
+                        y--;
+                }
+        }
+        /* Reset curser posion to check Quadrant down and to the left */
+        x = curser[1];
+        y = curser[0];
+
+        /* Iterate over columns */
+        for (j = 0; j < width; j++) {
+                /* Iterate over rows */
+                for (i = 0; i < height; i++) {
+                        open(afield, cfield, width, height, x, y);
+
+                        /* Increment x to move to the next row (only goes down) */
+                        if (x < height - 1){
+                                x++;
+                        }
+                                
+
+                }
+                x = curser[1];
+                /* Increment y to move to the next columns (only goes left) */
+                if (y > 0){
+                        y--;
+                }
+        }
+}
+
+
+void open(char **afield, char **cfield, int width, int height, int x, int y)
+{
+        int i;
+        int nx, ny;
+        int dx[] = {-1, 0, 1, -1, 1, -1, 0, 1};
+        int dy[] = {-1, -1, -1, 0, 0, 1, 1, 1};
+
+        if (afield[x][y] == ' ') {
+                for (i = 0; i < 8; i++){
+                        /* Set field to check x & y */
+                        nx = x + dx[i];
+                        ny = y + dy[i];
+                        /* Check boundaries */
+                        if (nx >= 0 && ny >= 0 && nx < width && ny < height) {
+                                if (afield[nx][ny] != 'f'){    
+                                        if (cfield[nx][ny] == '0') {
+                                                afield[nx][ny] = ' ';
+                                        } else {
+                                                afield[nx][ny] = cfield[nx][ny];
+                                        }
+                                }
+                        }
+                }
+        }
+
+}
