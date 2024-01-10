@@ -125,17 +125,17 @@ int main(void)
                 print_field(game_field, width, height, curser);
                 move = curser_move(width, height, curser);
                 /* printf("%i", move); */
-                if (move == 'f'){
+                if (move == FLAG_KEY){
                         printf("NoF: %i\n", number_of_used_flags);
-                        if (game_field[curser[1]][curser[0]] != 'f' && game_field[curser[1]][curser[0]] != ' ' && number_of_used_flags > 0) {
-                                game_field[curser[1]][curser[0]] = 'f';
+                        if (game_field[curser[1]][curser[0]] != FLAG_KEY && game_field[curser[1]][curser[0]] != ' ' && number_of_used_flags > 0) {
+                                game_field[curser[1]][curser[0]] = FLAG_KEY;
                                 number_of_used_flags--;
-                        } else if (game_field[curser[1]][curser[0]] == 'f') {
+                        } else if (game_field[curser[1]][curser[0]] == FLAG_KEY) {
                                 game_field[curser[1]][curser[0]] = '-';
                                 number_of_used_flags++;
                         }
                 }
-                if (game_field[curser[1]][curser[0]] != 'f' && move == 'o'){
+                if (game_field[curser[1]][curser[0]] != FLAG_KEY && move == OPEN_KEY){
                         game_field[curser[1]][curser[0]] = (controle_field[curser[1]][curser[0]] == '0') ? ' ' : controle_field[curser[1]][curser[0]];
                         print_field(game_field, width, height, curser);
                         open_surrounding(game_field, controle_field, width, height, curser);

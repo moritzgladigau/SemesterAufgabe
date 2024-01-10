@@ -1,18 +1,6 @@
 #include "userinput.h"
 #include "the-game.h"
 
-/* int getch(void) {
-    struct termios oldt, newt;
-    int ch;
-    tcgetattr(STDIN_FILENO, &oldt);
-    newt = oldt;
-    newt.c_lflag &= ~(ICANON | ECHO);
-    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-    ch = getchar();
-    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-    return ch;
-} */
-
 int getch(void) {
     int ch;
 
@@ -27,9 +15,9 @@ int getch(void) {
     } else if (ch == 'd') {
         ch = RIGHT_ARROW;
     } else if (ch == 'o'){
-        ch = A_KEY;
+        ch = OPEN_KEY;
     } else if (ch == 'f') {
-        ch = F_KEY;
+        ch = FLAG_KEY;
     } else {
         ch = 0;
     }
@@ -94,11 +82,11 @@ int curser_move(int width, int height, int curser[]) {
                 /* Arrow key handled */
             } 
         }
-        if (input == F_KEY) {
-                return F_KEY;
+        if (input == FLAG_KEY) {
+                return FLAG_KEY;
         }
-        if (input == A_KEY) {
-                return A_KEY;
+        if (input == OPEN_KEY) {
+                return OPEN_KEY;
         }
 
         if (input == 'q') {

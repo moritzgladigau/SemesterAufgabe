@@ -11,8 +11,8 @@
 #define DOWN_ARROW 's'
 #define LEFT_ARROW 'a'
 #define RIGHT_ARROW 'd'
-#define F_KEY 'f'
-#define A_KEY 'o'
+#define FLAG_KEY 'f'
+#define OPEN_KEY 'o'
 
 int getch(void);
 int handle_arrow_keys(int input, int curser[], int width, int height);
