@@ -134,7 +134,7 @@ int main(void)
                                 number_of_used_flags++;
                         }
                 }
-                if (game_field[curser[1]][curser[0]] != 'f' && move == 'a'){
+                if (game_field[curser[1]][curser[0]] != 'f' && move == 'o'){
                         game_field[curser[1]][curser[0]] = (controle_field[curser[1]][curser[0]] == '0') ? ' ' : controle_field[curser[1]][curser[0]];
                         print_field(game_field, width, height, curser);
                         open_surrounding(game_field, controle_field, width, height, curser);
