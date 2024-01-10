@@ -39,7 +39,7 @@ int main(void)
 
         /* Game */
         printf("Hello World!\n");
-        printf("Hallo hier wird Minesweeper gespielt :)\n");
+        printf("Hello here is played minesweeper:)\n");
         spiel_anleitung();
         
         /* User Input fuer die Größe des Maps und der Mine-Prozentzahl */
