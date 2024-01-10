@@ -1,3 +1,4 @@
+
 /* Hier werde ich jz sachen Testen ob DU wilst oder nicht!!! :P */
 
 #include "the-game.h"
@@ -174,4 +175,3 @@ void levels_of_difficulty(void)
         printf("4. User -defined\n");
         printf("5. Exit/ Help\n");
 }
-
