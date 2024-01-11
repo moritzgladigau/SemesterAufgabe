@@ -93,38 +93,6 @@ int fill_field(char **field, int width, int height) {
         return EXIT_SUCCESS;
 }
 
-void print_field(char **field, int width, int height, int curser[])
-{
-        int i, j;
-        for (i = -1; i <= height; i++) {
-                for (j = 0; j < width; j++) {
-                        if (j == 0) {
-                        printf("|");  /* Print left border */
-                        }
-
-                        if (i == -1 || i == height) {
-                                printf("===");  /* Print horizontal border */
-                        } else {
-                                if (i >= 0 && i < height && j >= 0 && j < width) {
-                                        if (i == curser[1] && j == curser[0]) {
-                                                printf("[%c]", field[i][j]);
-                                        } else {
-                                                printf(" %c ", field[i][j]);
-                                        }
-                                } else {
-                                        printf("   ");
-                                }
-                                
-                                /* printf(" %c ", (i >= 0 && i < height && j >= 0 && j < width) ? field[i][j] : ' '); */
-                        }
-
-                        if (j == width - 1) {
-                        printf("|");  /* Print right border */
-                        }
-                }
-                printf("\n");
-        }
-}
 
 int check_if_done(char **afield, char **cfield, int width, int height)
 {
@@ -276,4 +244,10 @@ void open(char **afield, char **cfield, int width, int height, int x, int y)
                 }
         }
 
+}
+
+void flush(void)
+{
+        char c;
+        while ((c = getchar()) != EOF && c != '\n');
 }

@@ -72,8 +72,7 @@ int curser_move(int width, int height, int curser[]) {
         input = getch();
 
         if (input == UP_ARROW || input == LEFT_ARROW || input == DOWN_ARROW || input == RIGHT_ARROW) {
-            // input = getch();  /* Capture '[' */
-            // input = getch();  /* Capture the actual arrow key */
+            
 
             result = handle_arrow_keys(input, curser, width, height);
 
