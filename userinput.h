@@ -7,12 +7,12 @@
 #include <unistd.h>
 
 #define ESCAPE_KEY 27
-#define UP_ARROW 65
-#define DOWN_ARROW 66
-#define LEFT_ARROW 67
-#define RIGHT_ARROW 68
-#define F_KEY 102
-#define A_KEY 97
+#define UP_ARROW 'w'
+#define DOWN_ARROW 's'
+#define LEFT_ARROW 'a'
+#define RIGHT_ARROW 'd'
+#define FLAG_KEY 'f'
+#define OPEN_KEY 'o'
 
 int getch(void);
 int handle_arrow_keys(int input, int curser[], int width, int height);

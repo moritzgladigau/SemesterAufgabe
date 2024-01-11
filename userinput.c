@@ -2,14 +2,27 @@
 #include "the-game.h"
 
 int getch(void) {
-    struct termios oldt, newt;
     int ch;
-    tcgetattr(STDIN_FILENO, &oldt);
-    newt = oldt;
-    newt.c_lflag &= ~(ICANON | ECHO);
-    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+
     ch = getchar();
-    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    
+    if (ch == 'w') {
+        ch = UP_ARROW;
+    } else if (ch == 'a') {
+        ch = LEFT_ARROW;
+    } else if (ch == 's') {
+        ch = DOWN_ARROW;
+    } else if (ch == 'd') {
+        ch = RIGHT_ARROW;
+    } else if (ch == 'o'){
+        ch = OPEN_KEY;
+    } else if (ch == 'f') {
+        ch = FLAG_KEY;
+    } else {
+        ch = 0;
+    }
+    fflush(stdin);
+
     return ch;
 }
 
@@ -23,10 +36,10 @@ int handle_arrow_keys(int input, int curser[], int width, int height) {
             curser[1]++;
             break;
         case LEFT_ARROW:
-            curser[0]++;
+            curser[0]--;
             break;
         case RIGHT_ARROW:
-            curser[0]--;
+            curser[0]++;
             break;
         default:
             return 0;   /* Not an arrow key */
@@ -58,9 +71,9 @@ int curser_move(int width, int height, int curser[]) {
 
         input = getch();
 
-        if (input == ESCAPE_KEY) {
-            input = getch();  /* Capture '[' */
-            input = getch();  /* Capture the actual arrow key */
+        if (input == UP_ARROW || input == LEFT_ARROW || input == DOWN_ARROW || input == RIGHT_ARROW) {
+            // input = getch();  /* Capture '[' */
+            // input = getch();  /* Capture the actual arrow key */
 
             result = handle_arrow_keys(input, curser, width, height);
 
@@ -69,11 +82,11 @@ int curser_move(int width, int height, int curser[]) {
                 /* Arrow key handled */
             } 
         }
-        if (input == F_KEY) {
-                return F_KEY;
+        if (input == FLAG_KEY) {
+                return FLAG_KEY;
         }
-        if (input == A_KEY) {
-                return A_KEY;
+        if (input == OPEN_KEY) {
+                return OPEN_KEY;
         }
 
         if (input == 'q') {
