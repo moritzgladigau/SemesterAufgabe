@@ -17,6 +17,9 @@
 #define MAX_WIDTH 92 
 #define MAX_HEIGHT 92
 
+int width = 0;
+int height = 0;
+float percent_mines = 0;
 int number_of_used_flags;
 
 /* Hier wird das Spiel erklärt. */
@@ -28,14 +31,13 @@ void levels_of_difficulty(void);
 
 int main(void)
 {       
-        int width = 0;
-        int height = 0;
-        float percent_mines = 0;
+        
         int choice, move = 0;
         int curser[] = {0, 0};
 
         char **game_field;
         char **controle_field;
+
         srand(time(NULL));
 
         /* Game */
@@ -53,27 +55,27 @@ int main(void)
                 switch (choice) {
                         case 1:
                                 printf("You play: Beginner\n");
-                                width=8;
-                                height=8;
-                                percent_mines=15.6;
+                                width = 8;
+                                height = 8;
+                                percent_mines = 15.6;
                                 printf("\tMap size will be set to 8x8.\n");
                                 printf("\tThe mine percentage is fixed at 15,6%%.\n");
                                 flush();
                                 break;
                         case 2:
                                 printf("You play: Intermediate\n");
-                                width=16;
-                                height=16;
-                                percent_mines=15.6;
+                                width = 16;
+                                height = 16;
+                                percent_mines = 15.6;
                                 printf("\tMap size will be set to 16x16.\n");
                                 printf("\tThe mine percentage is fixed at 15.6%%.\n");
                                 flush();
                                 break;
                         case 3:
                                 printf("You play: Expert\n");
-                                width=30;
-                                height=16;
-                                percent_mines=20.6;
+                                width = 30;
+                                height = 16;
+                                percent_mines = 20.6;
                                 printf("\tMap size will be set to 16x16.\n");
                                 printf("\tThe mine percentage is fixed at 20.6%%.\n");
                                 flush();
