@@ -69,7 +69,6 @@ int curser_move(int width, int height, int curser[], int *number_of_used_flags, 
             if (game_field[curser[1]][curser[0]] != FLAG_KEY && game_field[curser[1]][curser[0]] == '-' && *number_of_used_flags > 0) {
                     game_field[curser[1]][curser[0]] = FLAG_KEY;
                     (*number_of_used_flags)--;
-                    printf("numOf Flag in: %i\n", *number_of_used_flags);
             } else if (game_field[curser[1]][curser[0]] == FLAG_KEY) {
                     game_field[curser[1]][curser[0]] = '-';
                     (*number_of_used_flags)++;

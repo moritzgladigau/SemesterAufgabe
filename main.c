@@ -132,12 +132,10 @@ int main(void)
         number_of_used_flags = total_number_of_mine;
 
         while (check_if_done(game_field, controle_field, width, height) == CONTINUE) {
-                printf("numOf Flag bevor: %i\n", number_of_used_flags);
+                
                 print_field(game_field, width, height, curser);
 
                 move = curser_move(width, height, curser, &number_of_used_flags, game_field, controle_field);
-                
-                printf("numOf Flag after: %i\n", number_of_used_flags);
 
                 if (move == PROGRAM_FINISH){
                         break;
