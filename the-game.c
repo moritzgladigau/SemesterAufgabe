@@ -245,3 +245,10 @@ void open(char **afield, char **cfield, int width, int height, int x, int y)
         }
 
 }
+
+void flush(void)
+{
+        char c;
+        while ((c = getchar()) != EOF && c != '\n');
+}
+

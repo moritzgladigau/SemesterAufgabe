@@ -25,7 +25,7 @@ int number_of_used_flags;
 
 /* Hier wird das Spiel erklärt. */
 
-void flush(void);
+
 
 
 
@@ -49,7 +49,7 @@ int main(void)
         /* User Input fuer die Größe des Maps und der Mine-Prozentzahl */
         levels_of_difficulty();         /* Display the menu */
         
-        
+        user_choice(&width, &height, &percent_mines, MAX_HEIGHT, MAX_WIDTH);
 
         /* Set Controle Field */
         controle_field = field_init(width, height);
@@ -86,9 +86,4 @@ int main(void)
 }
 
 
-void flush(void)
-{
-        char c;
-        while ((c = getchar()) != EOF && c != '\n');
-}
 

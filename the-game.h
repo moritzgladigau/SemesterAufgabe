@@ -21,6 +21,7 @@ void fill_field(char **field, int width, int height);
 int check_if_done(char **afield, char **cfield, int width, int height);
 void open_surrounding(char **afield, char **cfield, int width, int height, int curser[]);
 void open(char **afield, char **cfield, int width, int height, int x, int y);
+void flush(void);
 
 
 

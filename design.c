@@ -62,7 +62,7 @@ void levels_of_difficulty(void)
 }
 
 
-void user_choice(int width, int height, float percent_mines, int MAX_HEIGHT, int MAX_WIDTH)
+void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, int MAX_WIDTH)
 {
         int choice;
 
@@ -73,27 +73,27 @@ void user_choice(int width, int height, float percent_mines, int MAX_HEIGHT, int
                         switch (choice) {
                                 case 1:
                                         printf("You play: Beginner\n");
-                                        width = 8;
-                                        height = 8;
-                                        percent_mines = 15.6;
+                                        *width = 8;
+                                        *height = 8;
+                                        *percent_mines = 15.6;
                                         printf("\tMap size will be set to 8x8.\n");
                                         printf("\tThe mine percentage is fixed at 15,6%%.\n");
                                         flush();
                                         break;
                                 case 2:
                                         printf("You play: Intermediate\n");
-                                        width = 16;
-                                        height = 16;
-                                        percent_mines = 15.6;
+                                        *width = 16;
+                                        *height = 16;
+                                        *percent_mines = 15.6;
                                         printf("\tMap size will be set to 16x16.\n");
                                         printf("\tThe mine percentage is fixed at 15.6%%.\n");
                                         flush();
                                         break;
                                 case 3:
                                         printf("You play: Expert\n");
-                                        width = 30;
-                                        height = 16;
-                                        percent_mines = 20.6;
+                                        *width = 30;
+                                        *height = 16;
+                                        *percent_mines = 20.6;
                                         printf("\tMap size will be set to 16x16.\n");
                                         printf("\tThe mine percentage is fixed at 20.6%%.\n");
                                         flush();
@@ -102,27 +102,27 @@ void user_choice(int width, int height, float percent_mines, int MAX_HEIGHT, int
                                         printf("You play: User -defined\n");
                                         do{
                                                 printf("Enter the number of rows (max. %i):", (MAX_WIDTH-2)/3);
-                                                scanf("%i", &width);
+                                                scanf("%i", width);
                                                 flush();
-                                        } while (width > (MAX_WIDTH-2)/3);
+                                        } while (*width > (MAX_WIDTH-2)/3);
                                         do{
                                                 printf("Enter the number of columns (max. %i):", (MAX_HEIGHT-2)/3);
-                                                scanf("%i", &height);
+                                                scanf("%i", height);
                                                 flush();
-                                        } while (height > (MAX_HEIGHT-2)/3);
+                                        } while (*height > (MAX_HEIGHT-2)/3);
                                         do{
                                                 printf("Add the min density (min. 1 %%, max. 99 %%):");
-                                                scanf("%f", &percent_mines);
+                                                scanf("%f", percent_mines);
                                                 flush();
-                                        } while (percent_mines < 1 || percent_mines > 99);
-                                        printf("\tMap size will be set to %ix%i.\n", width, height);
-                                        printf("\tThe mine percentage is fixed at %.1f%%.\n", percent_mines);
+                                        } while (*percent_mines < 1 || *percent_mines > 99);
+                                        printf("\tMap size will be set to %ix%i.\n", *width, *height);
+                                        printf("\tThe mine percentage is fixed at %.1f%%.\n", *percent_mines);
                                         break;
                                 case 5:
                                         system("clear");
                                         printf("\nExiting the menu.\n");
-                                        printf("\tMap size will be set to %ix%i.\n", width, height);
-                                        printf("\tThe mine percentage is fixed at %.1f%%.\n", percent_mines);
+                                        printf("\tMap size will be set to %ix%i.\n", *width, *height);
+                                        printf("\tThe mine percentage is fixed at %.1f%%.\n", *percent_mines);
                                         flush();
                                         break;
                                 default:
@@ -131,3 +131,5 @@ void user_choice(int width, int height, float percent_mines, int MAX_HEIGHT, int
                         } 
                 } while (choice != 5);
 }
+
+
