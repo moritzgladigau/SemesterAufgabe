@@ -9,7 +9,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-
 #define ERROR 0
 #define SUCCSES 1
 
@@ -17,7 +16,11 @@
 #define MAX_WIDTH 92 
 #define MAX_HEIGHT 92
 
+int width = 0;
+int height = 0;
+float percent_mines = 0;
 int number_of_used_flags;
+
 
 /* Hier wird das Spiel erklärt. */
 void spiel_anleitung(void);
@@ -28,14 +31,13 @@ void levels_of_difficulty(void);
 
 int main(void)
 {       
-        int width = 0;
-        int height = 0;
-        float percent_mines = 0;
+        
         int choice, move = 0;
         int curser[] = {0, 0};
 
         char **game_field;
         char **controle_field;
+
         srand(time(NULL));
 
         /* Game */
@@ -53,27 +55,27 @@ int main(void)
                 switch (choice) {
                         case 1:
                                 printf("You play: Beginner\n");
-                                width=8;
-                                height=8;
-                                percent_mines=15.6;
+                                width = 8;
+                                height = 8;
+                                percent_mines = 15.6;
                                 printf("\tMap size will be set to 8x8.\n");
                                 printf("\tThe mine percentage is fixed at 15,6%%.\n");
                                 flush();
                                 break;
                         case 2:
                                 printf("You play: Intermediate\n");
-                                width=16;
-                                height=16;
-                                percent_mines=15.6;
+                                width = 16;
+                                height = 16;
+                                percent_mines = 15.6;
                                 printf("\tMap size will be set to 16x16.\n");
                                 printf("\tThe mine percentage is fixed at 15.6%%.\n");
                                 flush();
                                 break;
                         case 3:
                                 printf("You play: Expert\n");
-                                width=30;
-                                height=16;
-                                percent_mines=20.6;
+                                width = 30;
+                                height = 16;
+                                percent_mines = 20.6;
                                 printf("\tMap size will be set to 16x16.\n");
                                 printf("\tThe mine percentage is fixed at 20.6%%.\n");
                                 flush();
@@ -111,39 +113,37 @@ int main(void)
                 } 
         } while (choice != 5);
 
+        /* Set Controle Field */
         controle_field = field_init(width, height);
+        if(controle_field == NULL) {
+                printf("Program finished!!\n");
+                return 0;
+        }
         place_a_mine(controle_field, percent_mines, width, height);
         place_numbers(controle_field, width, height);
 
         game_field = field_init(width, height);
+        if(game_field == NULL) {
+                printf("Program finished!!\n");
+                return 0;
+        }
         fill_field(game_field, width, height);
 
         number_of_used_flags = total_number_of_mine;
 
-        while (check_if_done(game_field, controle_field, width, height) == CONTINUE)
-        {
+        while (check_if_done(game_field, controle_field, width, height) == CONTINUE) {
+                printf("numOf Flag bevor: %i\n", number_of_used_flags);
                 print_field(game_field, width, height, curser);
-                move = curser_move(width, height, curser);
-                /* printf("%i", move); */
-                if (move == FLAG_KEY){
-                        printf("NoF: %i\n", number_of_used_flags);
-                        if (game_field[curser[1]][curser[0]] != FLAG_KEY && game_field[curser[1]][curser[0]] != ' ' && number_of_used_flags > 0) {
-                                game_field[curser[1]][curser[0]] = FLAG_KEY;
-                                number_of_used_flags--;
-                        } else if (game_field[curser[1]][curser[0]] == FLAG_KEY) {
-                                game_field[curser[1]][curser[0]] = '-';
-                                number_of_used_flags++;
-                        }
-                }
-                if (game_field[curser[1]][curser[0]] != FLAG_KEY && move == OPEN_KEY){
-                        game_field[curser[1]][curser[0]] = (controle_field[curser[1]][curser[0]] == '0') ? ' ' : controle_field[curser[1]][curser[0]];
-                        print_field(game_field, width, height, curser);
-                        open_surrounding(game_field, controle_field, width, height, curser);
-                }
-                if (move == 'q'){
+
+                move = curser_move(width, height, curser, &number_of_used_flags, game_field, controle_field);
+                
+                printf("numOf Flag after: %i\n", number_of_used_flags);
+
+                if (move == PROGRAM_FINISH){
                         break;
                 }
         }
+
         print_field(controle_field, width, height, curser);
 
         return 0;
