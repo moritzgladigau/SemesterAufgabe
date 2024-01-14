@@ -1,5 +1,6 @@
 #include "userinput.h"
 #include "the-game.h"
+#include "design.h"
 
 int getch(void) {
     int ch;

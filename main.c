@@ -3,6 +3,7 @@
 
 #include "the-game.h"
 #include "userinput.h"
+#include "design.h"
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
