@@ -45,7 +45,7 @@ int handle_arrow_keys(int input, int curser[], int width, int height) {
     return 1;    /*  Arrow key handled */
 }
 
-int curser_move(int width, int height, int curser[]) {
+int curser_move(int width, int height, int curser[], int number_of_used_flags, char **game_field, char **controle_field) {
     char input;
     int result;
 
@@ -64,20 +64,35 @@ int curser_move(int width, int height, int curser[]) {
             } 
         }
         if (input == FLAG_KEY) {
-                return FLAG_KEY;
-        }
-        if (input == OPEN_KEY) {
-                return OPEN_KEY;
+            
+            printf("NoF: %i\n", number_of_used_flags);
+            if (game_field[curser[1]][curser[0]] != FLAG_KEY && game_field[curser[1]][curser[0]] != ' ' && number_of_used_flags > 0) {
+                    game_field[curser[1]][curser[0]] = FLAG_KEY;
+                    number_of_used_flags--;
+            } else if (game_field[curser[1]][curser[0]] == FLAG_KEY) {
+                    game_field[curser[1]][curser[0]] = '-';
+                    number_of_used_flags++;
+            }
+            
+            return FLAG_KEY;
         }
 
-        if (input == 'q') {
-                return 'q';
-                break;  /* Exit the loop if 'q' is pressed */
+        if (game_field[curser[1]][curser[0]] != FLAG_KEY && input == OPEN_KEY) {
+
+            game_field[curser[1]][curser[0]] = (controle_field[curser[1]][curser[0]] == '0') ? ' ' : controle_field[curser[1]][curser[0]];
+
+            print_field(game_field, width, height, curser);
+            open_surrounding(game_field, controle_field, width, height, curser);
+
+            return OPEN_KEY;
+        }
+
+
+        if (input == PROGRAM_FINISH) {
+            printf("\nProgram terminated.\n");
+            return PROGRAM_FINISH;
+            break;  /* Exit the loop if 'q' is pressed */
         }
     }
-
-    printf("\nProgram terminated.\n");
-
-    return result;
 }
 

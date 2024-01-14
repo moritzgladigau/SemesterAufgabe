@@ -131,30 +131,15 @@ int main(void)
 
         number_of_used_flags = total_number_of_mine;
 
-        while (check_if_done(game_field, controle_field, width, height) == CONTINUE)
-        {
+        while (check_if_done(game_field, controle_field, width, height) == CONTINUE) {
                 print_field(game_field, width, height, curser);
-                move = curser_move(width, height, curser);
-                /* printf("%i", move); */
-                if (move == FLAG_KEY){
-                        printf("NoF: %i\n", number_of_used_flags);
-                        if (game_field[curser[1]][curser[0]] != FLAG_KEY && game_field[curser[1]][curser[0]] != ' ' && number_of_used_flags > 0) {
-                                game_field[curser[1]][curser[0]] = FLAG_KEY;
-                                number_of_used_flags--;
-                        } else if (game_field[curser[1]][curser[0]] == FLAG_KEY) {
-                                game_field[curser[1]][curser[0]] = '-';
-                                number_of_used_flags++;
-                        }
-                }
-                if (game_field[curser[1]][curser[0]] != FLAG_KEY && move == OPEN_KEY){
-                        game_field[curser[1]][curser[0]] = (controle_field[curser[1]][curser[0]] == '0') ? ' ' : controle_field[curser[1]][curser[0]];
-                        print_field(game_field, width, height, curser);
-                        open_surrounding(game_field, controle_field, width, height, curser);
-                }
-                if (move == 'q'){
+                move = curser_move(width, height, curser, number_of_used_flags, game_field, controle_field);
+                
+                if (move == PROGRAM_FINISH){
                         break;
                 }
         }
+
         print_field(controle_field, width, height, curser);
 
         return 0;
