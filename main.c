@@ -113,11 +113,20 @@ int main(void)
                 } 
         } while (choice != 5);
 
+        /* Set Controle Field */
         controle_field = field_init(width, height);
+        if(controle_field == NULL) {
+                printf("Program finished!!\n");
+                return 0;
+        }
         place_a_mine(controle_field, percent_mines, width, height);
         place_numbers(controle_field, width, height);
 
         game_field = field_init(width, height);
+        if(game_field == NULL) {
+                printf("Program finished!!\n");
+                return 0;
+        }
         fill_field(game_field, width, height);
 
         number_of_used_flags = total_number_of_mine;

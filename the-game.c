@@ -70,7 +70,7 @@ int mines_nearby(char **field, int width, int height, int x, int y)
         return count;
 }
 
-int place_numbers(char **field, int width, int height)
+void place_numbers(char **field, int width, int height)
 {
     int i, j;
     for (i = 0; i < width; i++) {
@@ -80,17 +80,15 @@ int place_numbers(char **field, int width, int height)
             }
         }
     }
-    return EXIT_SUCCESS;
 }
 
-int fill_field(char **field, int width, int height) {
+void fill_field(char **field, int width, int height) {
         int i, j;
         for (i = 0; i < height; i++) {
                 for (j = 0; j < width; j++) {
                         field[i][j] = '-';
                 }
         }
-        return EXIT_SUCCESS;
 }
 
 void print_field(char **field, int width, int height, int curser[])
