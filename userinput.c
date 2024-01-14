@@ -45,7 +45,7 @@ int handle_arrow_keys(int input, int curser[], int width, int height) {
     return 1;    /*  Arrow key handled */
 }
 
-int curser_move(int width, int height, int curser[], int number_of_used_flags, char **game_field, char **controle_field) {
+int curser_move(int width, int height, int curser[], int *number_of_used_flags, char **game_field, char **controle_field) {
     char input;
     int result;
 
@@ -65,19 +65,20 @@ int curser_move(int width, int height, int curser[], int number_of_used_flags, c
         }
         if (input == FLAG_KEY) {
             
-            printf("NoF: %i\n", number_of_used_flags);
-            if (game_field[curser[1]][curser[0]] != FLAG_KEY && game_field[curser[1]][curser[0]] != ' ' && number_of_used_flags > 0) {
+            printf("NoF: %i\n", *number_of_used_flags);
+            if (game_field[curser[1]][curser[0]] != FLAG_KEY && game_field[curser[1]][curser[0]] == '-' && *number_of_used_flags > 0) {
                     game_field[curser[1]][curser[0]] = FLAG_KEY;
-                    number_of_used_flags--;
+                    (*number_of_used_flags)--;
+                    printf("numOf Flag in: %i\n", *number_of_used_flags);
             } else if (game_field[curser[1]][curser[0]] == FLAG_KEY) {
                     game_field[curser[1]][curser[0]] = '-';
-                    number_of_used_flags++;
+                    (*number_of_used_flags)++;
             }
             
             return FLAG_KEY;
         }
 
-        if (game_field[curser[1]][curser[0]] != FLAG_KEY && input == OPEN_KEY) {
+        if (input == OPEN_KEY && game_field[curser[1]][curser[0]] != FLAG_KEY) {
 
             game_field[curser[1]][curser[0]] = (controle_field[curser[1]][curser[0]] == '0') ? ' ' : controle_field[curser[1]][curser[0]];
 
@@ -91,7 +92,6 @@ int curser_move(int width, int height, int curser[], int number_of_used_flags, c
         if (input == PROGRAM_FINISH) {
             printf("\nProgram terminated.\n");
             return PROGRAM_FINISH;
-            break;  /* Exit the loop if 'q' is pressed */
         }
     }
 }

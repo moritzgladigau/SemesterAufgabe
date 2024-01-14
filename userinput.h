@@ -22,6 +22,6 @@
 
 int getch(void);
 int handle_arrow_keys(int input, int curser[], int width, int height);
-int curser_move(int width, int height, int curser[], int number_of_used_flags, char **game_field, char **controle_field);
+int curser_move(int width, int height, int curser[], int *number_of_used_flags, char **game_field, char **controle_field);
 
 #endif
