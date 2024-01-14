@@ -15,7 +15,7 @@ void print_field(char **field, int width, int height, int curser[])
         for (i = -1; i <= height; i++) {
                 for (j = 0; j < width; j++) {
                         if (j == 0) {
-                                printf("|");  /* Print left border */
+                                printf(GREEN "|");  /* Print left border */
                         }
 
                         if (i == -1 || i == height) {
@@ -36,7 +36,7 @@ void print_field(char **field, int width, int height, int curser[])
                                 printf("|");  /* Print right border */
                         }
                 }
-                printf("\n");
+                printf("\n" RESET);
         }
 }
 
