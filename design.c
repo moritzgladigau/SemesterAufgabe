@@ -131,5 +131,3 @@ void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, 
                         } 
                 } while (choice != 5);
 }
-
-
