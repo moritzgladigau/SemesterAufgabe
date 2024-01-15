@@ -42,8 +42,6 @@ int main(void)
         write_log(user_name, difficulty, width, height, percent_mines, game_end);
 
         /* Game */
-        printf("Hello World!\n");
-        printf("Hello here is played minesweeper:)\n");
         spiel_anleitung();
         
         /* User Input fuer die Größe des Maps und der Mine-Prozentzahl */
