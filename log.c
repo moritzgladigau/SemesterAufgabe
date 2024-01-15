@@ -4,14 +4,14 @@ int check_if_file_exist(void)
 {
         FILE *file;
 
-        file = fopen("game_log.txt", "r");
+        file = fopen(FILE_NAME, "r");
 
         if (file == NULL) {
                 printf("Es wird ein Log File angelegt.\n");
-                file = fopen("game_log.txt", "w");
+                file = fopen(FILE_NAME, "w");
                 if (file != NULL) {
                         printf("Es wurde erfolgreich ein Log file für Sie angelegt.\n");
-                        file = fopen("game_log.txt", "a");
+                        file = fopen(FILE_NAME, "a");
                         fprintf(file, "Spiel\tDatum\tUhrzeit\tSpieler\tSchwierigkeit\tGrösse\tMinen Dichte\tSpielende\tZeit");
                         fclose(file);
                         return 1;
@@ -59,7 +59,7 @@ char* get_time(void)
 
 int get_game_id(void)
 {
-        FILE *file = fopen("game_log.txt", "r");
+        FILE *file = fopen(FILE_NAME, "r");
         long pos;
         char letztesZeichen;
         int result;
@@ -82,9 +82,7 @@ int get_game_id(void)
         } while (letztesZeichen != '\n' && pos > 0);
 
         if (fgets(buffer, sizeof(buffer), file) != NULL) {
-                /* printf("%s\n", fgets(buffer, sizeof(buffer), file)); */
                 token = strtok(buffer, " \t");
-                /* printf("token: %s\n", token); */
                 result = atoi(token);
         } else {
                 printf("Fehler beim Lesen der Aktuellen Spiel ID!\n");
@@ -100,7 +98,7 @@ void write_log(char user_name[], char difficulty[], int width, int height, doubl
 {
         FILE *file;
 
-        file = fopen("game_log.txt", "a");
+        file = fopen(FILE_NAME, "a");
 
         if (file == NULL) {
                 printf("Fehler beim Öffnen der Datei");
@@ -110,4 +108,66 @@ void write_log(char user_name[], char difficulty[], int width, int height, doubl
 
         fclose(file);
 
+}
+
+
+char* get_from_table(int row, int col)
+{
+    int max_row = get_game_id() - 1;
+    char buffer[100];
+    char *token = NULL;
+    char *result;
+    int i;
+    FILE *file = fopen(FILE_NAME, "r");
+
+    if (file == NULL) {
+        printf("File konnte nicht gelesen werden!\n");
+        fclose(file);
+        return NULL;
+    }
+
+    if (max_row < row) {
+        printf("Es wurden noch keine %i Spiele gespiel.\n", row);
+        fclose(file);
+        return NULL;
+    }
+
+    /* Zeilen überspringen */
+    for (i = 0; i < row; i++) {
+        fgets(buffer, sizeof(buffer), file);
+    }
+
+    /* Lese die gewünschte Zeile */
+    if(fgets(buffer, sizeof(buffer), file) != NULL) {
+        printf("buff: %s\n", buffer);
+        
+        for (i = 1; i <= col; i++) {
+            if (i == 1) {
+                token = strtok(buffer, "\t");
+                continue;
+            }
+            
+            token = strtok(NULL, "\t");
+            if (token == NULL) {
+                printf("Es gibt nicht genügend Spalten.\n");
+                break;
+            }
+        }
+    }
+    fclose(file);
+
+    if (token != NULL) {
+        result = (char*)malloc(strlen(token) + 1);
+        if (result != NULL) {
+            strcpy(result, token);
+            /* printf("result buff: %s\n", result); */
+            
+            return result;
+        } else {
+            printf("Speicher konnte nicht allokiert werden.\n");
+            return NULL;
+        }
+    } else {
+        return NULL;
+    }
 }
