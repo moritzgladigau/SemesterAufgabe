@@ -24,7 +24,7 @@ float percent_mines = 15.6;
 int number_of_used_flags;
 char difficulty[13] = "Beginner";
 char user_name[16] = "User";
-char game_end[];
+char game_end[5];
 
 int main(void)
 {       

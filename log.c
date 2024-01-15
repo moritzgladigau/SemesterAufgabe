@@ -139,7 +139,7 @@ char* get_from_table(int row, int col)
 
     /* Lese die gewünschte Zeile */
     if(fgets(buffer, sizeof(buffer), file) != NULL) {
-        printf("buff: %s\n", buffer);
+        /* printf("buff: %s\n", buffer); */
         
         for (i = 1; i <= col; i++) {
             if (i == 1) {
@@ -170,4 +170,41 @@ char* get_from_table(int row, int col)
     } else {
         return NULL;
     }
+}
+
+void tabel(void)
+{
+        char *result;
+        int max_row = get_game_id() - 1;
+        int *looked_rows = malloc(max_row * sizeof(int));
+        int i, j = 0;
+
+        /* Gebe deine Gesuchten Werte hier ein. */
+        int search_col = SPIELENDE;
+        char search_for[] = "Lose";
+
+        printf("Hallo\n");
+        if (looked_rows == NULL) {
+                printf("Fehler beim Allocieren.\n");
+                free(looked_rows);
+        }
+
+        for (i = 1; i <= max_row; i++) {
+                result = get_from_table(i, search_col);
+                if (result != NULL && strcmp(result, search_for) == 0) {
+                        looked_rows[j++] = atoi(get_from_table(i, 1));
+                }
+        }
+        j--;
+        while (j >= 0)
+        {
+            for (i = 1; i <= ZEIT; i++) {
+                result = get_from_table(looked_rows[j], i);
+                printf("%s\t", result);
+            }
+            printf("\n");
+            j--;
+        }
+
+        free(looked_rows);
 }
