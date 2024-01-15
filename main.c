@@ -41,17 +41,16 @@ int main(void)
         
         /* Log Test */
         check_if_file_exist();
-        
-        tabel();
 
         /* Game */
         spiel_anleitung();
         strcpy(user_name, choose_user_name());
+
         /* User Input fuer die Größe des Maps und der Mine-Prozentzahl */
         levels_of_difficulty();         /* Display the menu */
         
         user_choice(&width, &height, &percent_mines, MAX_HEIGHT, MAX_WIDTH, difficulty);
-        printf("UserName: %s\n", user_name);
+
         /* Set Controle Field */
         controle_field = field_init(width, height);
         if(controle_field == NULL) {
@@ -61,6 +60,7 @@ int main(void)
         place_a_mine(controle_field, percent_mines, width, height);
         place_numbers(controle_field, width, height);
 
+        /* Set Game Field */
         game_field = field_init(width, height);
         if(game_field == NULL) {
                 printf("Program finished!!\n");
@@ -70,10 +70,11 @@ int main(void)
 
         number_of_used_flags = total_number_of_mine;
         
+        /* Start */
         time(&start_time);
 
         while (check_if_done(game_field, controle_field, width, height) == CONTINUE) {
-                clear_screen();
+                
                 print_field(game_field, width, height, curser);
 
                 move = curser_move(width, height, curser, &number_of_used_flags, game_field, controle_field);
@@ -81,6 +82,7 @@ int main(void)
                 if (move == PROGRAM_FINISH){
                         break;
                 }
+                clear_screen();
         } 
         
         time(&end_time);

@@ -98,7 +98,8 @@ void levels_of_difficulty(void)
         printf("2. Intermediate\n");
         printf("3. Expert\n");
         printf("4. User -defined\n");
-        printf("5. Exit/ Help\n");
+        printf("5. Start\n");
+        printf("6. Look at the Log File\n");
 }
 
 void print_minesweeper_art(void)
@@ -180,11 +181,18 @@ void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, 
                                         printf("\tThe mine percentage is fixed at %.1f%%.\n", *percent_mines);
                                         break;
                                 case 5:
-                                        system("clear");
+                                        clear_screen();
                                         printf("\nExiting the menu.\n");
                                         printf("\tMap size will be set to %ix%i.\n", *width, *height);
                                         printf("\tThe mine percentage is fixed at %.1f%%.\n", *percent_mines);
                                         flush();
+                                        break;
+                                case 6:
+                                        clear_screen();
+                                        printf("==============================================================\n");
+                                        tabel();
+                                        printf("==============================================================\n");
+                                        levels_of_difficulty();
                                         break;
                                 default:
                                         printf("Invalid choice. Please enter a number between 1 and 4.\n");

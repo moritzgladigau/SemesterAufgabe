@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "the-game.h"
+#include "log.h"
 
 /* ANSI Escape Codes for text color */
 #define RED     "\x1B[31m"
