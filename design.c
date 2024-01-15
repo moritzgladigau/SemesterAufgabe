@@ -1,4 +1,8 @@
 #include "design.h"
+#include "userinput.h"
+#include "string.h"
+
+int lineWidth = 180;
 
 void clear_screen(void)
 {
@@ -7,6 +11,17 @@ void clear_screen(void)
         #else
                 system("clear");
         #endif
+}
+
+void printCenteredText(const char *text) {
+        int textLength = strlen(text);
+        int padding = (lineWidth - textLength) / 2;
+        int i;
+        for (i = 0; i < padding; i++) {
+                printf(" ");
+        }
+
+        printf("%s\n", text);
 }
 
 void print_field(char **field, int width, int height, int curser[])
@@ -42,13 +57,38 @@ void print_field(char **field, int width, int height, int curser[])
 
 void spiel_anleitung(void)
 {
-        printf("\n==================================================================================\n");
-        printf("|| Gebe die Adresse eines Feldes ein,\t\t\t\t\t\t||\n||\twelche sich aus einem <Groß_Buchstaben> und einer <Zahl> zusammenstezt.\t||\n");
-        printf("|| Dein makiertes Feld wird dir wie folgt angezeigt: <->\t\t\t||\n|| Wobei an stelle von dem '-' auch eine Zahl zwischen '1' und '8'\t\t||\n||\toder nix ' ' stehen kann.\t\t\t\t\t\t||\n");
-        printf("|| Um ein Feld mit einer Flage zu belegen gebe <f> ein\t\t\t\t||\n|| Um ein Feld aufzudeken gebe <a> ein.\t\t\t\t\t\t||\n");
-        printf("||\t\t\t\t\t\t\t\t\t\t||\n||\t----> Gebe <help> ein um wieder zu diesr Anleitung zu kommen <----\t||\n");
-        printf("==================================================================================\n");
-        printf("\n");
+        char *text1 = "Hallo hier wird Minesweeper gespielt!";
+        char *text2 = "Du kannst den Cursor mit 'WASD' bewegen, beachte jedoch! du musst deine Eingabe immer mit 'ENTER' bestaetigen!";
+        char *text3 = "Mit 'f' kannst du eine Flagge auf einem Feld platzieren, dieses wird dann nicht mehr aufgedeckt!";
+        char *text4 = "Ein Feld aufdecken kannst du mit Leertaste!";
+        char *text5 = "Druecke ENTER um das Spiel zu starten!";
+        char *button1 = "----------------";
+        char *button2 = "|      Start!    |";
+        char *button3 = "----------------";
+        printf("Bitte gib die Breite deines Terminal ein! (Standard = 180): ");
+        scanf("%d", &lineWidth);
+        flush();
+        print_minesweeper_art();
+        printCenteredText(text1);
+        printCenteredText(text2);
+        printCenteredText(text3);
+        printCenteredText(text4);
+        printf("\n\n");
+        printf(RED);
+        printCenteredText(text5);
+        printCenteredText(button1);
+        printCenteredText(button2);
+        printCenteredText(button3);
+        printf(RESET);
+        while (1)
+        {
+                if (getch() == '\n')
+                {
+                        break;
+                }
+                
+        }
+        
 }
 
 void levels_of_difficulty(void)
@@ -59,6 +99,23 @@ void levels_of_difficulty(void)
         printf("3. Expert\n");
         printf("4. User -defined\n");
         printf("5. Exit/ Help\n");
+}
+
+void print_minesweeper_art(void)
+{
+        char *line1 = " |    | ||| |\\  | ||||   |||  |   |  ||||  ||||  |||  ||||  ||||  ";
+        char *line2 = " |\\  /|  |  | \\ | |     |     |   |  |     |     |  | |     |   | ";
+        char *line3 = " | \\/ |  |  |  \\| ||||   |||  | | |  |||   |||   |||  |||   ||||  ";
+        char *line4 = " |    |  |  |   | |         | | | |  |     |     |    |     |  | ";
+        char *line5 = " |    | ||| |   | ||||   |||   | |   ||||  ||||  |    ||||  |  || ";
+        printf(RED);
+        printCenteredText(line1);
+        printCenteredText(line2);
+        printCenteredText(line3);
+        printCenteredText(line4);
+        printCenteredText(line5);
+        printf("\n\n\n");
+        printf(RESET);
 }
 
 
