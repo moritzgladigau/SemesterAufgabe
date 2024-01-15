@@ -19,9 +19,13 @@ void clear_screen(void);
 void print_field(char **field, int width, int height, int curser[]);
 void spiel_anleitung(void);
 void levels_of_difficulty(void);
+void menu_options(void);
 void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, int MAX_WIDTH, char *difficulty);
 void print_minesweeper_art(void);
 void printCenteredText(const char *text);
+
+void tabel_menu_options(void);
+void tabel_menu(void);
 
 
 

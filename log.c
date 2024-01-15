@@ -172,16 +172,12 @@ char* get_from_table(int row, int col)
     }
 }
 
-void tabel(void)
+void tabel(int search_col, char search_for[])
 {
         char *result;
         int max_row = get_game_id() - 1;
         int *looked_rows = malloc(max_row * sizeof(int));
         int i, j = 0;
-
-        /* Gebe deine Gesuchten Werte hier ein. */
-        int search_col = SPIELENDE;
-        char search_for[] = "Lose";
 
         if (looked_rows == NULL) {
                 printf("Fehler beim Allocieren.\n");
@@ -195,6 +191,11 @@ void tabel(void)
                 }
         }
         j--;
+
+        if(j == -1) {
+                printf("Es gibt keine Treffer!\n");
+        }
+        
         while (j >= 0)
         {
             for (i = 1; i <= ZEIT; i++) {

@@ -48,7 +48,8 @@ int main(void)
 
         /* User Input fuer die Größe des Maps und der Mine-Prozentzahl */
         levels_of_difficulty();         /* Display the menu */
-        
+        menu_options();
+
         user_choice(&width, &height, &percent_mines, MAX_HEIGHT, MAX_WIDTH, difficulty);
 
         /* Set Controle Field */

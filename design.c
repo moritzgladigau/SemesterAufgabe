@@ -98,6 +98,10 @@ void levels_of_difficulty(void)
         printf("2. Intermediate\n");
         printf("3. Expert\n");
         printf("4. User -defined\n");
+}
+
+void menu_options(void)
+{
         printf("5. Start\n");
         printf("6. Look at the Log File\n");
 }
@@ -126,7 +130,7 @@ void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, 
 
         do{
                         /* Get user Choice */
-                        printf("Enter your choice (1-5): ");
+                        printf("Enter your choice (1-6): ");
                         scanf("%d", &choice);
                         switch (choice) {
                                 case 1:
@@ -189,14 +193,113 @@ void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, 
                                         break;
                                 case 6:
                                         clear_screen();
-                                        printf("==============================================================\n");
-                                        tabel();
-                                        printf("==============================================================\n");
+                                        tabel_menu_options();
+                                        tabel_menu();
                                         levels_of_difficulty();
+                                        menu_options();
                                         break;
                                 default:
                                         printf("Invalid choice. Please enter a number between 1 and 4.\n");
                                         flush();
                         } 
                 } while (choice != 5);
+}
+
+void tabel_menu_options(void)
+{
+        printf("What u whant to see:\n");
+        printf("1. DATUM\n");
+        printf("2. SPIELER\n");
+        printf("3. SCHWIERIGKEIT\n");
+        printf("4. SPIELENDE\n");
+        printf("5. <--Zurück\n");
+}
+
+void tabel_menu(void)
+{
+        int choice;
+        int choice1;
+        char input[16];
+        char activ_input[3];
+
+        do{
+                printf("Enter your choice (1-5): ");
+                scanf("%d", &choice);
+
+                switch (choice) {
+                case 1:
+                        printf("Gebe Nacheinander Day.Month.Year jeweis zweistellig an:\n");
+                        printf("Day: ");
+                        scanf("%2s", input);
+                        flush();
+                        strcat(input, ".");
+
+                        printf("Month: ");
+                        scanf("%2s", activ_input);
+                        flush();
+                        strcat(input, activ_input);
+                        strcat(input, ".");
+
+                        printf("Year: ");
+                        scanf("%2s", activ_input);
+                        flush();
+                        strcat(input, activ_input);
+                        
+                        printf(">%s\n", input);
+
+                        tabel(DATUM, input);
+                        break;
+                case 2:
+                        strcpy(input, choose_user_name());
+                        tabel(SPIELER, input);
+                        break;
+                case 3:
+                        levels_of_difficulty();
+                        printf("Enter your choice (1-4): ");
+                        scanf("%d", &choice1);
+                        switch (choice1) {
+                        case 1:
+                                tabel(SCHWIERIGKEIT, "Beginner");
+                                break;
+                        case 2:
+                                tabel(SCHWIERIGKEIT, "Intermediate");
+                                break;
+                        case 3:
+                                tabel(SCHWIERIGKEIT, "Expert");
+                                break;
+                        case 4:
+                                tabel(SCHWIERIGKEIT, "User-defined");
+                                break;
+                        default:
+                                break;
+                        }
+                        break;
+                case 4:
+                        printf("Wonach möchtest du filtern:\n");
+                        printf("1. Win\n");
+                        printf("2. Lose\n");
+                        scanf("%d", &choice1);
+                        switch (choice1)
+                        {
+                        case 1:
+                                tabel(SPIELENDE, "Win");
+                                break;
+                        case 2:
+                                tabel(SPIELENDE, "Lose");
+                                break;
+                        default:
+                                break;
+                        }
+                        break;
+                default:
+                        break;
+                }
+                if (choice != 5) {
+                        printf("\n");
+                        tabel_menu_options();
+
+                }
+
+        } while (choice != 5);
+        clear_screen();
 }
