@@ -42,6 +42,7 @@ int main(void)
         /* Log Test */
         check_if_file_exist();
         
+        tabel();
 
         /* Game */
         spiel_anleitung();

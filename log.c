@@ -183,7 +183,6 @@ void tabel(void)
         int search_col = SPIELENDE;
         char search_for[] = "Lose";
 
-        printf("Hallo\n");
         if (looked_rows == NULL) {
                 printf("Fehler beim Allocieren.\n");
                 free(looked_rows);
