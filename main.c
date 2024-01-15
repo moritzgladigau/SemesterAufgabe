@@ -4,6 +4,7 @@
 #include "the-game.h"
 #include "userinput.h"
 #include "design.h"
+#include "log.h"
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
@@ -17,18 +18,13 @@
 #define MAX_WIDTH 92 
 #define MAX_HEIGHT 92
 
-int width = 0;
-int height = 0;
-float percent_mines = 0;
+int width = 8;
+int height = 8;
+float percent_mines = 15.6;
 int number_of_used_flags;
-
-
-/* Hier wird das Spiel erklärt. */
-
-
-
-
-
+char difficulty[] = "Beginner";
+char user_name[] = "User";
+char game_end[];
 
 int main(void)
 {       
@@ -40,6 +36,10 @@ int main(void)
         char **controle_field;
 
         srand(time(NULL));
+        
+        /* Log Test */
+        check_if_file_exist();
+        write_log(user_name, difficulty, width, height, percent_mines, game_end);
 
         /* Game */
         spiel_anleitung();
@@ -68,7 +68,7 @@ int main(void)
         number_of_used_flags = total_number_of_mine;
 
         while (check_if_done(game_field, controle_field, width, height) == CONTINUE) {
-                
+                clear_screen();
                 print_field(game_field, width, height, curser);
 
                 move = curser_move(width, height, curser, &number_of_used_flags, game_field, controle_field);
