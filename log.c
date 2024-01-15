@@ -82,9 +82,9 @@ int get_game_id(void)
         } while (letztesZeichen != '\n' && pos > 0);
 
         if (fgets(buffer, sizeof(buffer), file) != NULL) {
-                printf("%s\n", fgets(buffer, sizeof(buffer), file));
+                /* printf("%s\n", fgets(buffer, sizeof(buffer), file)); */
                 token = strtok(buffer, " \t");
-                printf("token: %s\n", token);
+                /* printf("token: %s\n", token); */
                 result = atoi(token);
         } else {
                 printf("Fehler beim Lesen der Aktuellen Spiel ID!\n");
