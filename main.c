@@ -22,12 +22,15 @@ int width = 8;
 int height = 8;
 float percent_mines = 15.6;
 int number_of_used_flags;
-char difficulty[] = "Beginner";
+char difficulty[13] = "Beginner";
 char user_name[] = "User";
 char game_end[];
 
 int main(void)
 {       
+        time_t start_time, end_time;
+        double time_difference;
+
         
         int move = 0;
         int curser[] = {0, 0};
@@ -39,7 +42,7 @@ int main(void)
         
         /* Log Test */
         check_if_file_exist();
-        write_log(user_name, difficulty, width, height, percent_mines, game_end);
+        
 
         /* Game */
         spiel_anleitung();
@@ -47,8 +50,8 @@ int main(void)
         /* User Input fuer die Größe des Maps und der Mine-Prozentzahl */
         levels_of_difficulty();         /* Display the menu */
         
-        user_choice(&width, &height, &percent_mines, MAX_HEIGHT, MAX_WIDTH);
-
+        user_choice(&width, &height, &percent_mines, MAX_HEIGHT, MAX_WIDTH, difficulty);
+        printf("UserName: %s\n", user_name);
         /* Set Controle Field */
         controle_field = field_init(width, height);
         if(controle_field == NULL) {
@@ -66,6 +69,8 @@ int main(void)
         fill_field(game_field, width, height);
 
         number_of_used_flags = total_number_of_mine;
+        
+        time(&start_time);
 
         while (check_if_done(game_field, controle_field, width, height) == CONTINUE) {
                 clear_screen();
@@ -76,9 +81,19 @@ int main(void)
                 if (move == PROGRAM_FINISH){
                         break;
                 }
-        }
+        } 
+        
+        time(&end_time);
+        time_difference = difftime(end_time, start_time);
 
+        if (check_if_done(game_field, controle_field, width, height) == LOSE) {
+                strcpy(game_end, "Lose");
+        } else {
+                strcpy(game_end, "Win");
+        }
+        
         print_field(controle_field, width, height, curser);
+        write_log(user_name, difficulty, width, height, percent_mines, game_end, time_difference);
 
         return 0;
 }

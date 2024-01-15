@@ -119,7 +119,7 @@ void print_minesweeper_art(void)
 }
 
 
-void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, int MAX_WIDTH)
+void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, int MAX_WIDTH, char *difficulty)
 {
         int choice;
 
@@ -133,6 +133,7 @@ void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, 
                                         *width = 8;
                                         *height = 8;
                                         *percent_mines = 15.6;
+                                        strcpy(difficulty, "Beginner");
                                         printf("\tMap size will be set to 8x8.\n");
                                         printf("\tThe mine percentage is fixed at 15,6%%.\n");
                                         flush();
@@ -142,6 +143,7 @@ void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, 
                                         *width = 16;
                                         *height = 16;
                                         *percent_mines = 15.6;
+                                        strcpy(difficulty, "Intermediate");
                                         printf("\tMap size will be set to 16x16.\n");
                                         printf("\tThe mine percentage is fixed at 15.6%%.\n");
                                         flush();
@@ -151,12 +153,14 @@ void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, 
                                         *width = 30;
                                         *height = 16;
                                         *percent_mines = 20.6;
+                                        strcpy(difficulty, "Expert");
                                         printf("\tMap size will be set to 16x16.\n");
                                         printf("\tThe mine percentage is fixed at 20.6%%.\n");
                                         flush();
                                         break;
                                 case 4:
                                         printf("You play: User -defined\n");
+                                        strcpy(difficulty, "User-defined");
                                         do{
                                                 printf("Enter the number of rows (max. %i):", (MAX_WIDTH-2)/3);
                                                 scanf("%i", width);

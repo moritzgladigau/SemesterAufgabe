@@ -11,6 +11,6 @@ char* get_date(void);
 char* get_time(void);
 char* get_from_table(int row, int col);
 int get_game_id(void);
-void write_log(char user_name[], char difficulty[], int width, int height, double percent_mines, char spielende[]);
+void write_log(char user_name[], char difficulty[], int width, int height, double percent_mines, char spielende[], double time_difference);
 
 #endif

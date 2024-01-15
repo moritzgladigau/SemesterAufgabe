@@ -96,7 +96,7 @@ int get_game_id(void)
         return ++result;
 }
 
-void write_log(char user_name[], char difficulty[], int width, int height, double percent_mines, char spielende[])
+void write_log(char user_name[], char difficulty[], int width, int height, double percent_mines, char spielende[], double time_difference)
 {
         FILE *file;
 
@@ -105,7 +105,7 @@ void write_log(char user_name[], char difficulty[], int width, int height, doubl
         if (file == NULL) {
                 printf("Fehler beim Öffnen der Datei");
         } else {
-                fprintf(file, "\n%i\t%s\t%s\t%s\t%s\t%ix%i\t%2.2f%%\t%s", get_game_id(), get_date(), get_time(), user_name, difficulty, width, height, percent_mines, spielende);
+                fprintf(file, "\n%i\t%s\t%s\t%s\t%s\t%ix%i\t%2.2f%%\t%s\t%0.3f", get_game_id(), get_date(), get_time(), user_name, difficulty, width, height, percent_mines, spielende, time_difference);
         }
 
         fclose(file);
