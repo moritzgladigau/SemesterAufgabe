@@ -23,7 +23,7 @@ int height = 8;
 float percent_mines = 15.6;
 int number_of_used_flags;
 char difficulty[13] = "Beginner";
-char user_name[] = "User";
+char user_name[16] = "User";
 char game_end[];
 
 int main(void)
@@ -31,13 +31,12 @@ int main(void)
         time_t start_time, end_time;
         double time_difference;
 
-        
         int move = 0;
         int curser[] = {0, 0};
 
         char **game_field;
         char **controle_field;
-
+        
         srand(time(NULL));
         
         /* Log Test */
@@ -46,7 +45,7 @@ int main(void)
 
         /* Game */
         spiel_anleitung();
-        
+        strcpy(user_name, choose_user_name());
         /* User Input fuer die Größe des Maps und der Mine-Prozentzahl */
         levels_of_difficulty();         /* Display the menu */
         
