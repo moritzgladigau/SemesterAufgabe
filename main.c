@@ -18,18 +18,13 @@
 #define MAX_WIDTH 92 
 #define MAX_HEIGHT 92
 
-int width = 0;
-int height = 0;
-float percent_mines = 0;
+int width = 8;
+int height = 8;
+float percent_mines = 15.6;
 int number_of_used_flags;
-
-
-/* Hier wird das Spiel erklärt. */
-
-
-
-
-
+char difficulty[] = "Beginner";
+char user_name[] = "User";
+char game_end[];
 
 int main(void)
 {       
@@ -41,8 +36,10 @@ int main(void)
         char **controle_field;
 
         srand(time(NULL));
-
+        
+        /* Log Test */
         check_if_file_exist();
+        write_log(user_name, difficulty, width, height, percent_mines, game_end);
 
         /* Game */
         printf("Hello World!\n");
