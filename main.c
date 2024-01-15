@@ -4,6 +4,7 @@
 #include "the-game.h"
 #include "userinput.h"
 #include "design.h"
+#include "log.h"
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
@@ -41,6 +42,8 @@ int main(void)
 
         srand(time(NULL));
 
+        check_if_file_exist();
+
         /* Game */
         printf("Hello World!\n");
         printf("Hello here is played minesweeper:)\n");
@@ -70,7 +73,7 @@ int main(void)
         number_of_used_flags = total_number_of_mine;
 
         while (check_if_done(game_field, controle_field, width, height) == CONTINUE) {
-                
+                clear_screen();
                 print_field(game_field, width, height, curser);
 
                 move = curser_move(width, height, curser, &number_of_used_flags, game_field, controle_field);
