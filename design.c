@@ -98,7 +98,12 @@ void levels_of_difficulty(void)
         printf("2. Intermediate\n");
         printf("3. Expert\n");
         printf("4. User -defined\n");
-        printf("5. Exit/ Help\n");
+}
+
+void menu_options(void)
+{
+        printf("5. Start\n");
+        printf("6. Look at the Log File\n");
 }
 
 void print_minesweeper_art(void)
@@ -119,13 +124,13 @@ void print_minesweeper_art(void)
 }
 
 
-void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, int MAX_WIDTH)
+void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, int MAX_WIDTH, char *difficulty)
 {
         int choice;
 
         do{
                         /* Get user Choice */
-                        printf("Enter your choice (1-5): ");
+                        printf("Enter your choice (1-6): ");
                         scanf("%d", &choice);
                         switch (choice) {
                                 case 1:
@@ -133,6 +138,7 @@ void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, 
                                         *width = 8;
                                         *height = 8;
                                         *percent_mines = 15.6;
+                                        strcpy(difficulty, "Beginner");
                                         printf("\tMap size will be set to 8x8.\n");
                                         printf("\tThe mine percentage is fixed at 15,6%%.\n");
                                         flush();
@@ -142,6 +148,7 @@ void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, 
                                         *width = 16;
                                         *height = 16;
                                         *percent_mines = 15.6;
+                                        strcpy(difficulty, "Intermediate");
                                         printf("\tMap size will be set to 16x16.\n");
                                         printf("\tThe mine percentage is fixed at 15.6%%.\n");
                                         flush();
@@ -151,12 +158,14 @@ void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, 
                                         *width = 30;
                                         *height = 16;
                                         *percent_mines = 20.6;
+                                        strcpy(difficulty, "Expert");
                                         printf("\tMap size will be set to 16x16.\n");
                                         printf("\tThe mine percentage is fixed at 20.6%%.\n");
                                         flush();
                                         break;
                                 case 4:
                                         printf("You play: User -defined\n");
+                                        strcpy(difficulty, "User-defined");
                                         do{
                                                 printf("Enter the number of rows (max. %i):", (MAX_WIDTH-2)/3);
                                                 scanf("%i", width);
@@ -176,15 +185,121 @@ void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, 
                                         printf("\tThe mine percentage is fixed at %.1f%%.\n", *percent_mines);
                                         break;
                                 case 5:
-                                        system("clear");
+                                        clear_screen();
                                         printf("\nExiting the menu.\n");
                                         printf("\tMap size will be set to %ix%i.\n", *width, *height);
                                         printf("\tThe mine percentage is fixed at %.1f%%.\n", *percent_mines);
                                         flush();
+                                        break;
+                                case 6:
+                                        clear_screen();
+                                        tabel_menu_options();
+                                        tabel_menu();
+                                        levels_of_difficulty();
+                                        menu_options();
                                         break;
                                 default:
                                         printf("Invalid choice. Please enter a number between 1 and 4.\n");
                                         flush();
                         } 
                 } while (choice != 5);
+}
+
+void tabel_menu_options(void)
+{
+        printf("What u whant to see:\n");
+        printf("1. DATUM\n");
+        printf("2. SPIELER\n");
+        printf("3. SCHWIERIGKEIT\n");
+        printf("4. SPIELENDE\n");
+        printf("5. <--Zurück\n");
+}
+
+void tabel_menu(void)
+{
+        int choice;
+        int choice1;
+        char input[16];
+        char activ_input[3];
+
+        do{
+                printf("Enter your choice (1-5): ");
+                scanf("%d", &choice);
+
+                switch (choice) {
+                case 1:
+                        printf("Gebe Nacheinander Day.Month.Year jeweis zweistellig an:\n");
+                        printf("Day: ");
+                        scanf("%2s", input);
+                        flush();
+                        strcat(input, ".");
+
+                        printf("Month: ");
+                        scanf("%2s", activ_input);
+                        flush();
+                        strcat(input, activ_input);
+                        strcat(input, ".");
+
+                        printf("Year: ");
+                        scanf("%2s", activ_input);
+                        flush();
+                        strcat(input, activ_input);
+                        
+                        printf(">%s\n", input);
+
+                        tabel(DATUM, input);
+                        break;
+                case 2:
+                        strcpy(input, choose_user_name());
+                        tabel(SPIELER, input);
+                        break;
+                case 3:
+                        levels_of_difficulty();
+                        printf("Enter your choice (1-4): ");
+                        scanf("%d", &choice1);
+                        switch (choice1) {
+                        case 1:
+                                tabel(SCHWIERIGKEIT, "Beginner");
+                                break;
+                        case 2:
+                                tabel(SCHWIERIGKEIT, "Intermediate");
+                                break;
+                        case 3:
+                                tabel(SCHWIERIGKEIT, "Expert");
+                                break;
+                        case 4:
+                                tabel(SCHWIERIGKEIT, "User-defined");
+                                break;
+                        default:
+                                break;
+                        }
+                        break;
+                case 4:
+                        printf("Wonach möchtest du filtern:\n");
+                        printf("1. Win\n");
+                        printf("2. Lose\n");
+                        scanf("%d", &choice1);
+                        switch (choice1)
+                        {
+                        case 1:
+                                tabel(SPIELENDE, "Win");
+                                break;
+                        case 2:
+                                tabel(SPIELENDE, "Lose");
+                                break;
+                        default:
+                                break;
+                        }
+                        break;
+                default:
+                        break;
+                }
+                if (choice != 5) {
+                        printf("\n");
+                        tabel_menu_options();
+
+                }
+
+        } while (choice != 5);
+        clear_screen();
 }
