@@ -88,6 +88,11 @@ int curser_move(int width, int height, int curser[], int *number_of_used_flags, 
             return OPEN_KEY;
         }
 
+        if (input == HELP_KEY) {
+            spiel_anleitung();
+            return HELP_KEY;
+        }
+
 
         if (input == PROGRAM_FINISH) {
             printf("\nProgram terminated.\n");
