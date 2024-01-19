@@ -16,6 +16,8 @@
 #define MINEN_DICHTE 7
 #define SPIELENDE 8
 #define ZEIT 9
+#define SCORE 10
+#define RANG 11
 
 int check_if_file_exist(void);
 char* get_date(void);
@@ -24,6 +26,7 @@ int get_game_id(void);
 void write_log(char user_name[], char difficulty[], int width, int height, double percent_mines, char spielende[], double time_difference);
 char* get_from_table(int row, int col);
 void tabel(int search_col, char search_for[]);
+int get_rang(int score);
 
 
 #endif

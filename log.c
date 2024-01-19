@@ -208,3 +208,21 @@ void tabel(int search_col, char search_for[])
 
         free(looked_rows);
 }
+
+int get_rang(int score)
+{
+        int rang = get_game_id();
+        int max_row = get_game_id();
+        int i;
+
+        for (i = 1; i < max_row; i++) {
+                
+            if (rang < atoi(get_from_table(i, RANG))) {
+                    continue;
+            } else if (score <= atoi(get_from_table(i, SCORE))) {
+                    rang = atoi(get_from_table(i, RANG));
+            }
+                
+        }
+    return rang;
+}
