@@ -27,6 +27,6 @@ void write_log(char user_name[], char difficulty[], int width, int height, doubl
 char* get_from_table(int row, int col);
 void tabel(int search_col, char search_for[]);
 int get_rang(int score);
-
+int set_score(int num_of_field, double percent_mines, double time);
 
 #endif

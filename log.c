@@ -97,13 +97,14 @@ int get_game_id(void)
 void write_log(char user_name[], char difficulty[], int width, int height, double percent_mines, char spielende[], double time_difference)
 {
         FILE *file;
+        int score = set_score(width * height, percent_mines, time_difference);
 
         file = fopen(FILE_NAME, "a");
 
         if (file == NULL) {
                 printf("Fehler beim Öffnen der Datei");
         } else {
-                fprintf(file, "\n%i\t%s\t%s\t%s\t%s\t%ix%i\t%2.2f%%\t%s\t%0.3f", get_game_id(), get_date(), get_time(), user_name, difficulty, width, height, percent_mines, spielende, time_difference);
+                fprintf(file, "\n%i\t%s\t%s\t%s\t%s\t%ix%i\t%2.2f%%\t%s\t%0.3f\t%i\t%i", get_game_id(), get_date(), get_time(), user_name, difficulty, width, height, percent_mines, spielende, time_difference, score, get_rang(score));
         }
 
         fclose(file);
@@ -225,4 +226,11 @@ int get_rang(int score)
                 
         }
     return rang;
+}
+
+int set_score(int num_of_field, double percent_mines, double time)
+{
+        int result;
+        result = (num_of_field * (int) percent_mines) / (int) time;
+        return result;
 }
