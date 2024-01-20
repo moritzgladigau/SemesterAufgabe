@@ -12,7 +12,7 @@
 #define UHRZEIT 3
 #define SPIELER 4
 #define SCHWIERIGKEIT 5
-#define GRÖSSE 6
+#define GRoeSSE 6
 #define MINEN_DICHTE 7
 #define SPIELENDE 8
 #define ZEIT 9

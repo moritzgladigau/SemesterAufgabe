@@ -1,6 +1,7 @@
 #include "design.h"
 #include "userinput.h"
-#include "string.h"
+#include <string.h>
+#include "sound.h"
 
 int lineWidth = 180;
 
@@ -27,19 +28,51 @@ void printCenteredText(const char *text) {
 void print_field(char **field, int width, int height, int curser[])
 {
         int i, j;
+        char border = '|';
+        char upper_border = '=';
         for (i = -1; i <= height; i++) {
                 for (j = 0; j < width; j++) {
                         if (j == 0) {
-                                printf(GREEN "|");  /* Print left border */
+                                printf(BLUE);
+                                printf("%c", border);
+                                printf(RESET); /* Print left border */
                         }
 
                         if (i == -1 || i == height) {
-                                printf("===");  /* Print horizontal border */
+                                printf(BLUE);
+                                printf("%c%c%c", upper_border, upper_border, upper_border);
+                                printf(RESET);  /* Print horizontal border */
                         } else {
                                 if (i >= 0 && i < height && j >= 0 && j < width) {
                                         if (i == curser[1] && j == curser[0]) {
+                                                printf(BLUE);
                                                 printf("[%c]", field[i][j]);
-                                        } else {
+                                                printf(RESET);
+                                        } else if (field[i][j] == '1')
+                                        {
+                                                printf(GREEN);
+                                                printf(" %c ", field[i][j]);
+                                                printf(RESET);
+                                        } else if (field[i][j] == '2')
+                                        {
+                                                printf(BLUE);
+                                                printf(" %c ", field[i][j]);
+                                                printf(RESET);
+                                        } else if (field[i][j] == '3')
+                                        {
+                                                printf(RED);
+                                                printf(" %c ", field[i][j]);
+                                                printf(RESET);
+                                        } else if (field[i][j] == '4')
+                                        {
+                                                printf(MAGENTA);
+                                                printf(" %c ", field[i][j]);
+                                                printf(RESET);
+                                        }else if(field[i][j] == 'f')
+                                        {
+                                                printf(" F ");
+                                        }
+                                        else {
                                                 printf(" %c ", field[i][j]);
                                         }
                                 } else {
@@ -48,7 +81,8 @@ void print_field(char **field, int width, int height, int curser[])
                         }
 
                         if (j == width - 1) {
-                                printf("|");  /* Print right border */
+                                printf(BLUE);
+                                printf("%c", border);  /* Print right border */
                         }
                 }
                 printf("\n" RESET);
@@ -93,17 +127,26 @@ void spiel_anleitung(void)
 
 void levels_of_difficulty(void)
 {
-        printf("Select a degree of prison:\n");
+        printf("\n\n");
+        printf("Waehle deinen Schwierigkeitsgrad!\n");
+        printf(GREEN);
         printf("1. Beginner\n");
+        printf(RESET);
+        printf(BLUE);
         printf("2. Intermediate\n");
+        printf(RESET);
+        printf(MAGENTA);
         printf("3. Expert\n");
+        printf(RESET);
         printf("4. User -defined\n");
 }
 
 void menu_options(void)
 {
-        printf("5. Start\n");
-        printf("6. Look at the Log File\n");
+        printf("5. Sieh dir das Log-File an!\n");
+        printf(RED);
+        printf("Druecke 'LEERTASTE' und danach 'ENTER' um dass Spiel zu beginnen!\n");
+        printf(RESET);
 }
 
 void print_minesweeper_art(void)
@@ -113,6 +156,7 @@ void print_minesweeper_art(void)
         char *line3 = " | \\/ |  |  |  \\| ||||   |||  | | |  |||   |||   |||  |||   ||||  ";
         char *line4 = " |    |  |  |   | |         | | | |  |     |     |    |     |  | ";
         char *line5 = " |    | ||| |   | ||||   |||   | |   ||||  ||||  |    ||||  |  || ";
+        play_sound("start.mp3");
         printf(RED);
         printCenteredText(line1);
         printCenteredText(line2);
@@ -126,93 +170,102 @@ void print_minesweeper_art(void)
 
 void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, int MAX_WIDTH, char *difficulty)
 {
-        int choice;
+        char choice;
 
         do{
                         /* Get user Choice */
-                        printf("Enter your choice (1-6): ");
-                        scanf("%d", &choice);
+                        scanf("%c", &choice);
                         switch (choice) {
-                                case 1:
-                                        printf("You play: Beginner\n");
+                                case '1':
+                                        printf("Du spielst als Anfaenger!\n");
                                         *width = 8;
                                         *height = 8;
                                         *percent_mines = 15.6;
                                         strcpy(difficulty, "Beginner");
-                                        printf("\tMap size will be set to 8x8.\n");
-                                        printf("\tThe mine percentage is fixed at 15,6%%.\n");
+                                        printf("\t Kartengroesse: 8x8.\n");
+                                        printf("\t Minenanteil: 15,6%%.\n");
+                                        printf(RED);
+                                        printf("Druecke 'LEERTASTE' und danach 'ENTER' um dass Spiel zu beginnen!\n");
+                                        printf(RESET);
                                         flush();
                                         break;
-                                case 2:
-                                        printf("You play: Intermediate\n");
+                                case '2':
+                                        printf("Du spielst als Fortgeschrittener!\n");
                                         *width = 16;
                                         *height = 16;
                                         *percent_mines = 15.6;
                                         strcpy(difficulty, "Intermediate");
-                                        printf("\tMap size will be set to 16x16.\n");
-                                        printf("\tThe mine percentage is fixed at 15.6%%.\n");
+                                        printf("\t Kartengroesse: 16x16.\n");
+                                        printf("\t Minenanteil: 15.6%%.\n");
+                                        printf(RED);
+                                        printf("Druecke 'LEERTASTE' und danach 'ENTER' um dass Spiel zu beginnen!\n");
+                                        printf(RESET);
                                         flush();
                                         break;
-                                case 3:
-                                        printf("You play: Expert\n");
+                                case '3':
+                                        printf("Du spielst als Experte!\n");
                                         *width = 30;
                                         *height = 16;
                                         *percent_mines = 20.6;
                                         strcpy(difficulty, "Expert");
-                                        printf("\tMap size will be set to 16x16.\n");
-                                        printf("\tThe mine percentage is fixed at 20.6%%.\n");
+                                        printf("\t Kartengroesse: 16x16.\n");
+                                        printf("\t Minenanteil: 20.6%%.\n");
+                                        printf(RED);
+                                        printf("Druecke 'LEERTASTE' und danach 'ENTER' um dass Spiel zu beginnen!\n");
+                                        printf(RESET);
                                         flush();
                                         break;
-                                case 4:
-                                        printf("You play: User -defined\n");
+                                case '4':
+                                        printf("Du spielst Nuter-Definiert!\n");
                                         strcpy(difficulty, "User-defined");
                                         do{
-                                                printf("Enter the number of rows (max. %i):", (MAX_WIDTH-2)/3);
+                                                printf("Gib die Anzahl an Zeilen ein: (max. %i):", (MAX_WIDTH-2)/3);
                                                 scanf("%i", width);
                                                 flush();
                                         } while (*width > (MAX_WIDTH-2)/3);
                                         do{
-                                                printf("Enter the number of columns (max. %i):", (MAX_HEIGHT-2)/3);
+                                                printf("Gib die Anzahl an Spalten ein: (max. %i):", (MAX_HEIGHT-2)/3);
                                                 scanf("%i", height);
                                                 flush();
                                         } while (*height > (MAX_HEIGHT-2)/3);
                                         do{
-                                                printf("Add the min density (min. 1 %%, max. 99 %%):");
+                                                printf("Gib den Minenanteil ein: (min. 1 %%, max. 99 %%):");
                                                 scanf("%f", percent_mines);
                                                 flush();
                                         } while (*percent_mines < 1 || *percent_mines > 99);
-                                        printf("\tMap size will be set to %ix%i.\n", *width, *height);
-                                        printf("\tThe mine percentage is fixed at %.1f%%.\n", *percent_mines);
+                                        printf("\tKartengroesse: %ix%i.\n", *width, *height);
+                                        printf("\tMinenanteil:  %.1f%%.\n", *percent_mines);
+                                        printf(RED);
+                                        printf("Druecke 'LEERTASTE' und danach 'ENTER' um dass Spiel zu beginnen!\n");
+                                        printf(RESET);
                                         break;
-                                case 5:
+                                case 32:
                                         clear_screen();
-                                        printf("\nExiting the menu.\n");
-                                        printf("\tMap size will be set to %ix%i.\n", *width, *height);
-                                        printf("\tThe mine percentage is fixed at %.1f%%.\n", *percent_mines);
+                                        printf("\nMenue wird verlassen!\n");
+                                        printf("\tKartengroesse: %ix%i.\n", *width, *height);
+                                        printf("\tMinenanteil:  %.1f%%.\n", *percent_mines);
                                         flush();
                                         break;
-                                case 6:
+                                case '5':
                                         clear_screen();
                                         tabel_menu_options();
                                         tabel_menu();
                                         levels_of_difficulty();
                                         menu_options();
                                         break;
-                                default:
-                                        printf("Invalid choice. Please enter a number between 1 and 4.\n");
-                                        flush();
+                                
                         } 
-                } while (choice != 5);
+                } while (choice != 32);
 }
 
 void tabel_menu_options(void)
 {
-        printf("What u whant to see:\n");
+        printf("Menue:\n");
         printf("1. DATUM\n");
         printf("2. SPIELER\n");
         printf("3. SCHWIERIGKEIT\n");
         printf("4. SPIELENDE\n");
-        printf("5. <--Zurück\n");
+        printf("5. <--Zurueck\n");
 }
 
 void tabel_menu(void)
@@ -223,12 +276,12 @@ void tabel_menu(void)
         char activ_input[3];
 
         do{
-                printf("Enter your choice (1-5): ");
+                printf("Gib deine Auswahl ein: \n ");
                 scanf("%d", &choice);
 
                 switch (choice) {
                 case 1:
-                        printf("Gebe Nacheinander Day.Month.Year jeweis zweistellig an:\n");
+                        printf("Gebe Nacheinander Tag.Monat.Jahr jeweis zweistellig an:\n");
                         printf("Day: ");
                         scanf("%2s", input);
                         flush();
@@ -275,7 +328,7 @@ void tabel_menu(void)
                         }
                         break;
                 case 4:
-                        printf("Wonach möchtest du filtern:\n");
+                        printf("Wonach moechtest du filtern:\n");
                         printf("1. Win\n");
                         printf("2. Lose\n");
                         scanf("%d", &choice1);

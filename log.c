@@ -21,7 +21,7 @@ int check_if_file_exist(void)
                         return 0;
                 }
         } else {
-                printf("Sie haben bereits ein Log File für ihre Spieldaten.\n");
+                printf("Sie haben bereits ein Log File fuer ihre Spieldaten.\n");
                 return 1;
         }
 }
@@ -67,7 +67,7 @@ int get_game_id(void)
         char *token;
 
         if (file == NULL) {
-                printf("Fehler beim Öffnen der Datei.\n");
+                printf("Fehler beim Oeffnen der Datei.\n");
                 return 0;
         }
 
@@ -102,7 +102,7 @@ void write_log(char user_name[], char difficulty[], int width, int height, doubl
         file = fopen(FILE_NAME, "a");
 
         if (file == NULL) {
-                printf("Fehler beim Öffnen der Datei");
+                printf("Fehler beim Oeffnen der Datei");
         } else {
                 fprintf(file, "\n%i\t%s\t%s\t%s\t%s\t%ix%i\t%2.2f%%\t%s\t%0.3f\t%i\t%i", get_game_id(), get_date(), get_time(), user_name, difficulty, width, height, percent_mines, spielende, time_difference, score, get_rang(score));
         }
