@@ -1,4 +1,5 @@
 #include "the-game.h"
+#include "design.h"
 
 int total_number_of_mine = 0;
 
@@ -106,13 +107,13 @@ int check_if_done(char **afield, char **cfield, int width, int height)
                 c = cfield[i][j];
 
                 if (c == MINE && a == 'f') {
-                    printf("WIN\n");
+                    printf("Du hast gewonnen!\n");
                     founden_mines++;
                     if (founden_mines == total_number_of_mine) {
                             return WIN;
                     }
                 } else if (c == MINE && a == MINE) {
-                    printf("\nLOSE\n");
+                    printf("\nDu hast leider verloren!\n");
                     return LOSE;
                 } else {
                     result = CONTINUE;
@@ -120,7 +121,7 @@ int check_if_done(char **afield, char **cfield, int width, int height)
             }
         }
 
-        printf("CONTINUE\n");
+
         return result;
 }
 
