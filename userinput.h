@@ -1,6 +1,7 @@
 #ifndef USER_INPUT
 #define USER_INPUT
 
+#include "design.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -15,6 +16,7 @@
 #define FLAG_KEY 'f'
 #define OPEN_KEY 32     /* 32 => Space */
 
+#define HELP_KEY 'h'
 #define Q_KEY 'q'
 
 

@@ -5,6 +5,7 @@
 #include "userinput.h"
 #include "design.h"
 #include "log.h"
+#include "sound.h"
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
@@ -25,6 +26,7 @@ int number_of_used_flags;
 char difficulty[13] = "Beginner";
 char user_name[16] = "User";
 char game_end[5];
+int status = CONTINUE;
 
 int main(void)
 {       
@@ -36,7 +38,6 @@ int main(void)
 
         char **game_field;
         char **controle_field;
-        
         srand(time(NULL));
         
         /* Log Test */
@@ -94,12 +95,10 @@ int main(void)
         } else {
                 strcpy(game_end, "Win");
         }
-        
+        wait_ticks(2000000000);
+        play_sound("end.mp3");
         print_field(controle_field, width, height, curser);
         write_log(user_name, difficulty, width, height, percent_mines, game_end, time_difference);
 
-        return 0;
+ return 0;
 }
-
-
-

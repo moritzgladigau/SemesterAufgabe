@@ -1,5 +1,6 @@
 #include "the-game.h"
 #include "design.h"
+#include "sound.h"
 
 int total_number_of_mine = 0;
 
@@ -35,8 +36,8 @@ int place_a_mine(char **field, int perpercent_mines, int width, int height)
     int count_number_of_mine;
     total_number_of_mine = floor(number_of_fields * perpercent_mines / 100) + 1;
     count_number_of_mine = total_number_of_mine;
-    printf("Number of field: %i\n", number_of_fields);
-    printf("Number of mine: %i\n", total_number_of_mine);
+    printf("Feldanzahl: %i\n", number_of_fields);
+    printf("Minenanzahl: %i\n", total_number_of_mine);
     while (count_number_of_mine > 0)
     {
         x = (rand() % width + 1) - 1;
@@ -110,10 +111,29 @@ int check_if_done(char **afield, char **cfield, int width, int height)
                     printf("Du hast gewonnen!\n");
                     founden_mines++;
                     if (founden_mines == total_number_of_mine) {
+                                play_sound("win.mp3");
+                                printf("             .");
+                                printf("           /|\\                .");
+                                printf("          / | \\            ./|\\,");
+                                printf("      ,-' \\|/ `-.        <-=O=->");
+                                printf("   <'--====--`>       '\\|/`");
+                                printf("    `-. /|\\ ,-'           '");
+                                printf("      \\ | /");
+                                printf("      \\|/   ");
+                                printf("       '");
+                                printf("Du hast leider verloren!");
+                                wait_ticks(2000000000);
                             return WIN;
                     }
                 } else if (c == MINE && a == MINE) {
+                        printf("        ,--.!,\n");
+                        printf("     __/   -*-\n");
+                        printf("   ,d08b.  '|`\n");
+                        printf("   0088MM     \n");
+                        printf("   `9MMP'     \n");
                     printf("\nDu hast leider verloren!\n");
+                    play_sound("lose.mp3");
+                    wait_ticks(2000000000);
                     return LOSE;
                 } else {
                     result = CONTINUE;
