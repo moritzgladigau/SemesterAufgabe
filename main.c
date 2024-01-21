@@ -42,6 +42,8 @@ int main(void)
         
         /* Log Test */
         check_if_file_exist();
+        printf("gmID: %i\n", get_game_id());
+        printf("gmHigh: %i\n", get_higest_rang());
 
         /* Game */
         spiel_anleitung();
@@ -95,8 +97,8 @@ int main(void)
         } else {
                 strcpy(game_end, "Win");
         }
-        wait_ticks(2000000000);
-        play_sound("end.mp3");
+        // wait_ticks(2000000000);
+        // play_sound("end.mp3");
         print_field(controle_field, width, height, curser);
         write_log(user_name, difficulty, width, height, percent_mines, game_end, time_difference);
 

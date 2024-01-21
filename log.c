@@ -12,7 +12,7 @@ int check_if_file_exist(void)
                 if (file != NULL) {
                         printf("Es wurde erfolgreich ein Log file für Sie angelegt.\n");
                         file = fopen(FILE_NAME, "a");
-                        fprintf(file, "Spiel\tDatum\tUhrzeit\tSpieler\tSchwierigkeit\tGrösse\tMinen Dichte\tSpielende\tZeit");
+                        fprintf(file, "Spiel\tDatum\tUhrzeit\tSpieler\tSchwierigkeit\tGrösse\tMinen Dichte\tSpielende\tZeit\tScore\tRang");
                         fclose(file);
                         return 1;
                 } else {
@@ -108,6 +108,9 @@ void write_log(char user_name[], char difficulty[], int width, int height, doubl
         }
 
         fclose(file);
+        if (get_game_id() - 1 != 1){
+                update_rang();
+        }
 
 }
 
@@ -212,25 +215,101 @@ void tabel(int search_col, char search_for[])
 
 int get_rang(int score)
 {
-        int rang = get_game_id();
+        int rang = INT_MAX;
         int max_row = get_game_id();
         int i;
 
+        if (max_row == 1) {
+                return rang = get_higest_rang();
+        }
+
         for (i = 1; i < max_row; i++) {
                 
-            if (rang < atoi(get_from_table(i, RANG))) {
-                    continue;
+            if (rang <= atoi(get_from_table(i, RANG))) {
+                        continue;
             } else if (score <= atoi(get_from_table(i, SCORE))) {
-                    rang = atoi(get_from_table(i, RANG));
+                        rang = atoi(get_from_table(i, RANG));
             }
                 
         }
-    return rang;
+    return rang = (rang == INT_MAX) ? get_higest_rang() : rang;
 }
 
 int set_score(int num_of_field, double percent_mines, double time)
 {
         int result;
-        result = (num_of_field * (int) percent_mines) / (int) time;
+        result = (num_of_field * (int) percent_mines) / (int) time + 1;
+        return result;
+}
+
+int update_rang(void)
+{
+        int rang_update, i;
+        int max_row = get_game_id();
+        int save = atoi(get_from_table(max_row - 1, RANG));
+
+        FILE *file = fopen(FILE_NAME, "r");
+        FILE *temp = fopen("temp.txt", "w");
+
+        if (file == NULL || temp == NULL) {
+                perror("Fehler beim Öffnen der Datei");
+                return 1;
+        }
+
+        fprintf(temp, "Spiel\tDatum\tUhrzeit\tSpieler\tSchwierigkeit\tGrösse\tMinen Dichte\tSpielende\tZeit\tScore\tRang");
+
+        for (i = 1; i < max_row - 1; i++) {
+                if (atoi(get_from_table(max_row - 1, SCORE)) == atoi(get_from_table(i, SCORE))) {
+                        return 0;
+                }
+        }
+
+        for (i = 1; i < max_row; i++) {
+                rang_update = atoi(get_from_table(i, RANG));
+
+                char *game_id = get_from_table(i, SPIEL);
+                char *date = get_from_table(i, DATUM);
+                char *time = get_from_table(i, UHRZEIT);
+                char *user_name = get_from_table(i, SPIELER);
+                char *difficulty = get_from_table(i, SCHWIERIGKEIT);
+                char *groese = get_from_table(i, GRoeSSE);
+                char *percent_mines = get_from_table(i, MINEN_DICHTE);
+                char *spielende = get_from_table(i, SPIELENDE);
+                char *score = get_from_table(i, SCORE);
+                char *time_difference = get_from_table(i, ZEIT);
+
+                if (rang_update >= save) {
+                        if (rang_update == save && atoi(get_from_table(max_row - 1, SCORE)) == atoi(get_from_table(i, SCORE))) {
+                                fprintf(temp, "\n%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%i", game_id, date, time, user_name, difficulty, groese, percent_mines, spielende, time_difference, score, rang_update);
+                                continue;
+                        } else {
+                                rang_update++;
+                        }
+                }
+                fprintf(temp, "\n%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%i", game_id, date, time, user_name, difficulty, groese, percent_mines, spielende, time_difference, score, rang_update);
+        }
+
+
+        fclose(temp);
+        fclose(file);
+
+        if (remove(FILE_NAME) != 0 || rename("temp.txt", FILE_NAME) != 0) {
+                printf("Fehler beim Umbenennen der Datei");
+                return 1;
+        }
+        return 0;
+
+}
+
+int get_higest_rang(void)
+{
+        int i, result = 1;
+        int max = get_game_id();
+        for (i = 1; i < max; i++) {
+                if (result < atoi(get_from_table(i, RANG))) {
+                        result = atoi(get_from_table(i, RANG));
+                }
+        }
+        printf("gHigh: %i\n", result);
         return result;
 }
