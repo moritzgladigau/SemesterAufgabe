@@ -42,8 +42,6 @@ int main(void)
         
         /* Log Test */
         check_if_file_exist();
-        printf("gmID: %i\n", get_game_id());
-        printf("gmHigh: %i\n", get_higest_rang());
 
         /* Game */
         spiel_anleitung();

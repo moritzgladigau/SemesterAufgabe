@@ -202,7 +202,7 @@ void tabel(int search_col, char search_for[])
         
         while (j >= 0)
         {
-            for (i = 1; i <= ZEIT; i++) {
+            for (i = 1; i <= RANG; i++) {
                 result = get_from_table(looked_rows[j], i);
                 printf("%s\t", result);
             }
@@ -310,6 +310,5 @@ int get_higest_rang(void)
                         result = atoi(get_from_table(i, RANG));
                 }
         }
-        printf("gHigh: %i\n", result);
         return result;
 }

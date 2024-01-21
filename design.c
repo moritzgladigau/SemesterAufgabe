@@ -10,7 +10,7 @@ void clear_screen(void)
         #ifdef _WIN32
                 system("cls"); 
         #else
-                // system("clear");
+                system("clear");
         #endif
 }
 
@@ -265,7 +265,8 @@ void tabel_menu_options(void)
         printf("2. SPIELER\n");
         printf("3. SCHWIERIGKEIT\n");
         printf("4. SPIELENDE\n");
-        printf("5. <--Zurueck\n");
+        printf("5. Scorboard\n");
+        printf("6. <--Zurueck\n");
 }
 
 void tabel_menu(void)
@@ -344,15 +345,53 @@ void tabel_menu(void)
                                 break;
                         }
                         break;
+                case 5:
+                        printf("Scorboard\n");
+                        scorboard();
+                        break;
                 default:
                         break;
                 }
-                if (choice != 5) {
+                if (choice != 6) {
                         printf("\n");
                         tabel_menu_options();
 
                 }
 
-        } while (choice != 5);
+        } while (choice != 6);
         clear_screen();
+}
+
+void scorboard(void)
+{
+        int high_rank = get_higest_rang();
+        int i;
+        char *i_as_char = malloc(countDigits(high_rank) * sizeof(char));
+
+        if (i_as_char == NULL) {
+                free(i_as_char);
+                printf("Fehler beim Allocieren.\n");
+                return;
+        }
+
+        for (i = 1; i <= high_rank; i++) {
+                sprintf(i_as_char, "%d\n", i);
+                printf("Suche nach Rang: %s\n", i_as_char);
+                tabel(RANG, i_as_char);
+        }
+        free(i_as_char);
+}
+
+int countDigits(int num) {
+        int count = 0;  
+        
+        if (num == 0) {
+                return 1;
+        }       
+        
+        while (num != 0) {
+                num /= 10;
+                count++;
+        }       
+        return count;
 }

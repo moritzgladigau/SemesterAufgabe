@@ -26,6 +26,8 @@ void printCenteredText(const char *text);
 
 void tabel_menu_options(void);
 void tabel_menu(void);
+void scorboard(void);
+int countDigits(int num);
 
 
 
