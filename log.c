@@ -247,6 +247,7 @@ int update_rang(void)
         int rang_update, i;
         int max_row = get_game_id();
         int save = atoi(get_from_table(max_row - 1, RANG));
+        char *game_id, *date, *time, *user_name, *difficulty, *groese, *percent_mines, *spielende, *score, *time_difference;
 
         FILE *file = fopen(FILE_NAME, "r");
         FILE *temp = fopen("temp.txt", "w");
@@ -267,16 +268,16 @@ int update_rang(void)
         for (i = 1; i < max_row; i++) {
                 rang_update = atoi(get_from_table(i, RANG));
 
-                char *game_id = get_from_table(i, SPIEL);
-                char *date = get_from_table(i, DATUM);
-                char *time = get_from_table(i, UHRZEIT);
-                char *user_name = get_from_table(i, SPIELER);
-                char *difficulty = get_from_table(i, SCHWIERIGKEIT);
-                char *groese = get_from_table(i, GRoeSSE);
-                char *percent_mines = get_from_table(i, MINEN_DICHTE);
-                char *spielende = get_from_table(i, SPIELENDE);
-                char *score = get_from_table(i, SCORE);
-                char *time_difference = get_from_table(i, ZEIT);
+                game_id = get_from_table(i, SPIEL);
+                date = get_from_table(i, DATUM);
+                time = get_from_table(i, UHRZEIT);
+                user_name = get_from_table(i, SPIELER);
+                difficulty = get_from_table(i, SCHWIERIGKEIT);
+                groese = get_from_table(i, GRoeSSE);
+                percent_mines = get_from_table(i, MINEN_DICHTE);
+                spielende = get_from_table(i, SPIELENDE);
+                score = get_from_table(i, SCORE);
+                time_difference = get_from_table(i, ZEIT);
 
                 if (rang_update >= save) {
                         if (rang_update == save && atoi(get_from_table(max_row - 1, SCORE)) == atoi(get_from_table(i, SCORE))) {
