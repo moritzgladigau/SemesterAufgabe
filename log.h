@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <limits.h>
 
 #define FILE_NAME "game_log.txt"
 #define SPIEL 1
@@ -28,5 +29,7 @@ char* get_from_table(int row, int col);
 void tabel(int search_col, char search_for[]);
 int get_rang(int score);
 int set_score(int num_of_field, double percent_mines, double time);
+int update_rang(void);
+int get_higest_rang(void);
 
 #endif

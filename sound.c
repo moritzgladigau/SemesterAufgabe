@@ -17,9 +17,8 @@ void play_sound(char* soundFile)
         snprintf(command, sizeof(command), "start %s", soundpath);
         system(command);
 #else
-        snprintf(command, sizeof(command), "open %s", soundpath);
+        snprintf(command, sizeof(command), "afplay %s", soundpath);
         system(command);
-        system("xdotool getactivewindow windowkill");
 #endif
 
 }
