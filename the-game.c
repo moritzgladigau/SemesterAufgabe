@@ -1,6 +1,9 @@
 #include "the-game.h"
+#include "design.h"
+#include "sound.h"
 
 int total_number_of_mine = 0;
+int open_field = 0;
 
 /* Initicialies of the storage space for the Game and Controle field */
 char **field_init(int width, int height)
@@ -34,8 +37,8 @@ int place_a_mine(char **field, int perpercent_mines, int width, int height)
     int count_number_of_mine;
     total_number_of_mine = floor(number_of_fields * perpercent_mines / 100) + 1;
     count_number_of_mine = total_number_of_mine;
-    printf("Number of field: %i\n", number_of_fields);
-    printf("Number of mine: %i\n", total_number_of_mine);
+    printf("Feldanzahl: %i\n", number_of_fields);
+    printf("Minenanzahl: %i\n", total_number_of_mine);
     while (count_number_of_mine > 0)
     {
         x = (rand() % width + 1) - 1;
@@ -70,7 +73,7 @@ int mines_nearby(char **field, int width, int height, int x, int y)
         return count;
 }
 
-int place_numbers(char **field, int width, int height)
+void place_numbers(char **field, int width, int height)
 {
     int i, j;
     for (i = 0; i < width; i++) {
@@ -80,17 +83,15 @@ int place_numbers(char **field, int width, int height)
             }
         }
     }
-    return EXIT_SUCCESS;
 }
 
-int fill_field(char **field, int width, int height) {
+void fill_field(char **field, int width, int height) {
         int i, j;
         for (i = 0; i < height; i++) {
                 for (j = 0; j < width; j++) {
                         field[i][j] = '-';
                 }
         }
-        return EXIT_SUCCESS;
 }
 
 
@@ -99,28 +100,33 @@ int check_if_done(char **afield, char **cfield, int width, int height)
         int i, j, a, c;
         int result = CONTINUE;
         int founden_mines = 0;
+        open_field = 0;
+
         for (i = 0; i < width; i++)
         {
             for (j = 0; j < height; j++) {
                 a = afield[i][j];
                 c = cfield[i][j];
+                printf("a==%i==%c\n",i, a);
 
                 if (c == MINE && a == 'f') {
-                    printf("WIN\n");
+                    printf("Du hast gewonnen!\n");
                     founden_mines++;
                     if (founden_mines == total_number_of_mine) {
                             return WIN;
                     }
                 } else if (c == MINE && a == MINE) {
-                    printf("\nLOSE\n");
                     return LOSE;
                 } else {
                     result = CONTINUE;
                 }
+                if (a != '-') {
+                        open_field++;
+                }
             }
         }
 
-        printf("CONTINUE\n");
+
         return result;
 }
 
@@ -243,7 +249,6 @@ void open(char **afield, char **cfield, int width, int height, int x, int y)
                         }
                 }
         }
-
 }
 
 void flush(void)

@@ -1,26 +1,11 @@
 #include "userinput.h"
 #include "the-game.h"
+#include "design.h"
 
 int getch(void) {
     int ch;
 
     ch = getchar();
-    
-    if (ch == 'w') {
-        ch = UP_ARROW;
-    } else if (ch == 'a') {
-        ch = LEFT_ARROW;
-    } else if (ch == 's') {
-        ch = DOWN_ARROW;
-    } else if (ch == 'd') {
-        ch = RIGHT_ARROW;
-    } else if (ch == 'o'){
-        ch = OPEN_KEY;
-    } else if (ch == 'f') {
-        ch = FLAG_KEY;
-    } else {
-        ch = 0;
-    }
     fflush(stdin);
 
     return ch;
@@ -29,16 +14,16 @@ int getch(void) {
 
 int handle_arrow_keys(int input, int curser[], int width, int height) {
     switch (input) {
-        case UP_ARROW:
+        case UP:
             curser[1]--;
             break;
-        case DOWN_ARROW:
+        case DOWN:
             curser[1]++;
             break;
-        case LEFT_ARROW:
+        case LEFT:
             curser[0]--;
             break;
-        case RIGHT_ARROW:
+        case RIGHT:
             curser[0]++;
             break;
         default:
@@ -61,18 +46,16 @@ int handle_arrow_keys(int input, int curser[], int width, int height) {
     return 1;    /*  Arrow key handled */
 }
 
-int curser_move(int width, int height, int curser[]) {
+int curser_move(int width, int height, int curser[], int *number_of_used_flags, char **game_field, char **controle_field) {
     char input;
     int result;
 
     while (1) {
         result = 0;
-        fflush(stdout);
 
         input = getch();
 
-        if (input == UP_ARROW || input == LEFT_ARROW || input == DOWN_ARROW || input == RIGHT_ARROW) {
-            
+        if (input == UP || input == LEFT || input == DOWN || input == RIGHT) {
 
             result = handle_arrow_keys(input, curser, width, height);
 
@@ -82,20 +65,55 @@ int curser_move(int width, int height, int curser[]) {
             } 
         }
         if (input == FLAG_KEY) {
-                return FLAG_KEY;
-        }
-        if (input == OPEN_KEY) {
-                return OPEN_KEY;
+            
+            printf("NoF: %i\n", *number_of_used_flags);
+            if (game_field[curser[1]][curser[0]] != FLAG_KEY && game_field[curser[1]][curser[0]] == '-' && *number_of_used_flags > 0) {
+                    game_field[curser[1]][curser[0]] = FLAG_KEY;
+                    (*number_of_used_flags)--;
+            } else if (game_field[curser[1]][curser[0]] == FLAG_KEY) {
+                    game_field[curser[1]][curser[0]] = '-';
+                    (*number_of_used_flags)++;
+            }
+            
+            return FLAG_KEY;
         }
 
-        if (input == 'q') {
-                return 'q';
-                break;  /* Exit the loop if 'q' is pressed */
+        if (input == OPEN_KEY && game_field[curser[1]][curser[0]] != FLAG_KEY) {
+
+            game_field[curser[1]][curser[0]] = (controle_field[curser[1]][curser[0]] == '0') ? ' ' : controle_field[curser[1]][curser[0]];
+
+            print_field(game_field, width, height, curser);
+            open_surrounding(game_field, controle_field, width, height, curser);
+
+            return OPEN_KEY;
+        }
+
+        if (input == HELP_KEY) {
+            spiel_anleitung();
+            return HELP_KEY;
+        }
+
+
+        if (input == PROGRAM_FINISH) {
+            printf("\nProgram terminated.\n");
+            return PROGRAM_FINISH;
         }
     }
+}
 
-    printf("\nProgram terminated.\n");
+char *choose_user_name(void)
+{
+    char *name = malloc(6 * sizeof(char));
 
-    return result;
+    if (name == NULL) {
+        printf("Memory allocation failed.\n");
+        return "User";
+    }
+
+    printf("Geben Sie Ihren Benutzernamen ein (max. 6 Zeichen): ");
+    fflush(stdin);
+    scanf("%6s", name);
+    fflush(stdin);
+    return name;
 }
 
