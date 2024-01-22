@@ -6,6 +6,7 @@
 #include <string.h>
 #include <time.h>
 #include <limits.h>
+#include "design.h"
 
 #define FILE_NAME "game_log.txt"
 #define SPIEL 1

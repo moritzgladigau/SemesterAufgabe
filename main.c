@@ -98,7 +98,7 @@ int main(void)
                 pic_win();
         }
         // wait_ticks(2000000000);
-        play_sound("end.mp3");
+        // play_sound("end.mp3");
         print_field(controle_field, width, height, curser);
         write_log(user_name, difficulty, width, height, percent_mines, game_end, time_difference);
 

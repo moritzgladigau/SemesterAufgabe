@@ -277,7 +277,7 @@ void tabel_menu(void)
         char activ_input[3];
 
         do{
-                printf("Gib deine Auswahl ein: \n ");
+                printf("Gib deine Auswahl ein: ");
                 scanf("%d", &choice);
 
                 switch (choice) {
@@ -329,7 +329,7 @@ void tabel_menu(void)
                         }
                         break;
                 case 4:
-                        printf("Wonach moechtest du filtern:\n");
+                        printf("Wonach moechtest du filtern: ");
                         printf("1. Win\n");
                         printf("2. Lose\n");
                         scanf("%d", &choice1);
@@ -375,8 +375,8 @@ void scorboard(void)
         }
 
         for (i = 1; i <= high_rank; i++) {
-                sprintf(i_as_char, "%d\n", i);
-                printf("Suche nach Rang: %s\n", i_as_char);
+                sprintf(i_as_char, "%d", i);
+                printf(BOLD UNDERLINE "Suche nach Rang: %s\n" RESET, i_as_char);
                 tabel(RANG, i_as_char);
         }
         free(i_as_char);

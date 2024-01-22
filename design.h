@@ -15,6 +15,9 @@
 #define CYAN    "\x1B[36m"
 #define RESET   "\x1B[0m"
 
+#define UNDERLINE "\033[4m"
+#define BOLD "\033[1m"
+
 void clear_screen(void);
 void print_field(char **field, int width, int height, int curser[]);
 void spiel_anleitung(void);
