@@ -94,10 +94,10 @@ int get_game_id(void)
         return ++result;
 }
 
-void write_log(char user_name[], char difficulty[], int width, int height, double percent_mines, char spielende[], double time_difference)
+void write_log(char user_name[], char difficulty[], int width, int height, double percent_mines, char spielende[], double time_difference, int open_field)
 {
         FILE *file;
-        int score = set_score(width * height, percent_mines, time_difference);
+        int score = set_score(width * height, percent_mines, time_difference, open_field);
 
         file = fopen(FILE_NAME, "a");
 
@@ -239,10 +239,10 @@ int get_rang(int score)
     return rang = (rang == INT_MAX) ? get_higest_rang() : rang;
 }
 
-int set_score(int num_of_field, double percent_mines, double time)
+int set_score(int num_of_field, double percent_mines, double time, int open_field)
 {
         int result;
-        result = (num_of_field * (int) percent_mines) / (int) time + 1;
+        result = (num_of_field * (int) percent_mines) / ((int) time + 1) * open_field;
         return result;
 }
 

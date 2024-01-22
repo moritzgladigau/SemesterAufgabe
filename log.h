@@ -25,11 +25,11 @@ int check_if_file_exist(void);
 char* get_date(void);
 char* get_time(void);
 int get_game_id(void);
-void write_log(char user_name[], char difficulty[], int width, int height, double percent_mines, char spielende[], double time_difference);
+void write_log(char user_name[], char difficulty[], int width, int height, double percent_mines, char spielende[], double time_difference, int open_field);
 char* get_from_table(int row, int col);
 void tabel(int search_col, char search_for[]);
 int get_rang(int score);
-int set_score(int num_of_field, double percent_mines, double time);
+int set_score(int num_of_field, double percent_mines, double time, int open_field);
 int update_rang(void);
 int get_higest_rang(void);
 

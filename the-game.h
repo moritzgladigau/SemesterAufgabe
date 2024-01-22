@@ -11,6 +11,7 @@
 #define CONTINUE 1
 
 extern int total_number_of_mine;
+extern int open_field;
 
 char **field_init(int width, int height);
 int place_a_mine(char **field, int perpercent_mines, int width, int height);
