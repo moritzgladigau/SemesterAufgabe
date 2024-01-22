@@ -3,6 +3,7 @@
 #include "sound.h"
 
 int total_number_of_mine = 0;
+int open_field = 0;
 
 /* Initicialies of the storage space for the Game and Controle field */
 char **field_init(int width, int height)
@@ -100,43 +101,28 @@ int check_if_done(char **afield, char **cfield, int width, int height)
         int i, j, a, c;
         int result = CONTINUE;
         int founden_mines = 0;
+        open_field = 0;
 
         for (i = 0; i < width; i++)
         {
             for (j = 0; j < height; j++) {
                 a = afield[i][j];
                 c = cfield[i][j];
+                printf("a==%i==%c\n",i, a);
 
                 if (c == MINE && a == 'f') {
                     printf("Du hast gewonnen!\n");
                     founden_mines++;
                     if (founden_mines == total_number_of_mine) {
-                                play_sound("win.mp3");
-                                printf("             .");
-                                printf("           /|\\                .");
-                                printf("          / | \\            ./|\\,");
-                                printf("      ,-' \\|/ `-.        <-=O=->");
-                                printf("   <'--====--`>       '\\|/`");
-                                printf("    `-. /|\\ ,-'           '");
-                                printf("      \\ | /");
-                                printf("      \\|/   ");
-                                printf("       '");
-                                printf("Du hast leider verloren!");
-                                wait_ticks(2000000000);
                             return WIN;
                     }
                 } else if (c == MINE && a == MINE) {
-                        printf("        ,--.!,\n");
-                        printf("     __/   -*-\n");
-                        printf("   ,d08b.  '|`\n");
-                        printf("   0088MM     \n");
-                        printf("   `9MMP'     \n");
-                    printf("\nDu hast leider verloren!\n");
-                    play_sound("lose.mp3");
-                    wait_ticks(2000000000);
                     return LOSE;
                 } else {
                     result = CONTINUE;
+                }
+                if (a != '-') {
+                        open_field++;
                 }
             }
         }
@@ -264,7 +250,6 @@ void open(char **afield, char **cfield, int width, int height, int x, int y)
                         }
                 }
         }
-
 }
 
 void flush(void)

@@ -71,7 +71,6 @@ int main(void)
         fill_field(game_field, width, height);
 
         number_of_used_flags = total_number_of_mine;
-        
         /* Start */
         time(&start_time);
 
@@ -84,7 +83,8 @@ int main(void)
                 if (move == PROGRAM_FINISH){
                         break;
                 }
-                clear_screen();
+                // clear_screen();
+                printf("Aufgedekt: %i\n", open_field);
         } 
         
         time(&end_time);
@@ -92,13 +92,17 @@ int main(void)
 
         if (check_if_done(game_field, controle_field, width, height) == LOSE) {
                 strcpy(game_end, "Lose");
+                pic_lose();
         } else {
                 strcpy(game_end, "Win");
+                pic_win();
         }
-        wait_ticks(2000000000);
-        play_sound("end.mp3");
+        // wait_ticks(2000000000);
+        // play_sound("end.mp3");
         print_field(controle_field, width, height, curser);
-        write_log(user_name, difficulty, width, height, percent_mines, game_end, time_difference);
+        write_log(user_name, difficulty, width, height, percent_mines, game_end, time_difference, open_field);
+        free(controle_field);
+        free(game_field);
 
  return 0;
 }

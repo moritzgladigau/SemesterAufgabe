@@ -12,7 +12,7 @@ int check_if_file_exist(void)
                 if (file != NULL) {
                         printf("Es wurde erfolgreich ein Log file für Sie angelegt.\n");
                         file = fopen(FILE_NAME, "a");
-                        fprintf(file, "Spiel\tDatum\tUhrzeit\tSpieler\tSchwierigkeit\tGrösse\tMinen Dichte\tSpielende\tZeit\tScore\tRang");
+                        fprintf(file, "Spiel\tDatum\tUhrzeit\tSpieler\tSchwierigkeit\tGrösse\tMinen Dichte\tSpielende\tZeit\tScore\tRang\t~");
                         fclose(file);
                         return 1;
                 } else {
@@ -74,7 +74,7 @@ int get_game_id(void)
         fseek(file, 0, SEEK_END);
 
         pos = ftell(file);
-
+        
         do {
                 pos--;
                 fseek(file, pos, SEEK_SET);
@@ -94,17 +94,17 @@ int get_game_id(void)
         return ++result;
 }
 
-void write_log(char user_name[], char difficulty[], int width, int height, double percent_mines, char spielende[], double time_difference)
+void write_log(char user_name[], char difficulty[], int width, int height, double percent_mines, char spielende[], double time_difference, int open_field)
 {
         FILE *file;
-        int score = set_score(width * height, percent_mines, time_difference);
+        int score = set_score(width * height, percent_mines, time_difference, open_field);
 
         file = fopen(FILE_NAME, "a");
 
         if (file == NULL) {
                 printf("Fehler beim Oeffnen der Datei");
         } else {
-                fprintf(file, "\n%i\t%s\t%s\t%s\t%s\t%ix%i\t%2.2f%%\t%s\t%0.3f\t%i\t%i", get_game_id(), get_date(), get_time(), user_name, difficulty, width, height, percent_mines, spielende, time_difference, score, get_rang(score));
+                fprintf(file, "\n%i\t%s\t%s\t%s\t%s\t%ix%i\t%2.2f%%\t%s\t%0.3f\t%i\t%i\t~", get_game_id(), get_date(), get_time(), user_name, difficulty, width, height, percent_mines, spielende, time_difference, score, get_rang(score));
         }
 
         fclose(file);
@@ -197,8 +197,12 @@ void tabel(int search_col, char search_for[])
         j--;
 
         if(j == -1) {
-                printf("Es gibt keine Treffer!\n");
+                printf(RED "Es gibt keine Treffer!\n\n" RESET);
+                free(looked_rows);
+                return;
         }
+
+        printf(GREEN "Spiel\tDatum\t\tUhrzeit\t\tSpieler\tSchwierigkeit\tGrösse\tMinen\tSpiel-\tZeit\tScore\tRang\n\t\t\t\t\t\t\t\t\tDichte\tende\n" RESET);
         
         while (j >= 0)
         {
@@ -235,10 +239,10 @@ int get_rang(int score)
     return rang = (rang == INT_MAX) ? get_higest_rang() : rang;
 }
 
-int set_score(int num_of_field, double percent_mines, double time)
+int set_score(int num_of_field, double percent_mines, double time, int open_field)
 {
         int result;
-        result = (num_of_field * (int) percent_mines) / (int) time + 1;
+        result = (num_of_field * (int) percent_mines) / ((int) time + 1) * open_field;
         return result;
 }
 
@@ -257,7 +261,7 @@ int update_rang(void)
                 return 1;
         }
 
-        fprintf(temp, "Spiel\tDatum\tUhrzeit\tSpieler\tSchwierigkeit\tGrösse\tMinen Dichte\tSpielende\tZeit\tScore\tRang");
+        fprintf(temp, "Spiel\tDatum\tUhrzeit\tSpieler\tSchwierigkeit\tGrösse\tMinen Dichte\tSpielende\tZeit\tScore\tRang\t~");
 
         for (i = 1; i < max_row - 1; i++) {
                 if (atoi(get_from_table(max_row - 1, SCORE)) == atoi(get_from_table(i, SCORE))) {
@@ -281,13 +285,13 @@ int update_rang(void)
 
                 if (rang_update >= save) {
                         if (rang_update == save && atoi(get_from_table(max_row - 1, SCORE)) == atoi(get_from_table(i, SCORE))) {
-                                fprintf(temp, "\n%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%i", game_id, date, time, user_name, difficulty, groese, percent_mines, spielende, time_difference, score, rang_update);
+                                fprintf(temp, "\n%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%i\t~", game_id, date, time, user_name, difficulty, groese, percent_mines, spielende, time_difference, score, rang_update);
                                 continue;
                         } else {
                                 rang_update++;
                         }
                 }
-                fprintf(temp, "\n%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%i", game_id, date, time, user_name, difficulty, groese, percent_mines, spielende, time_difference, score, rang_update);
+                fprintf(temp, "\n%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%i\t~", game_id, date, time, user_name, difficulty, groese, percent_mines, spielende, time_difference, score, rang_update);
         }
 
 

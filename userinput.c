@@ -103,16 +103,16 @@ int curser_move(int width, int height, int curser[], int *number_of_used_flags, 
 
 char *choose_user_name(void)
 {
-    char *name = malloc(15 * sizeof(char));
+    char *name = malloc(6 * sizeof(char));
 
     if (name == NULL) {
         printf("Memory allocation failed.\n");
         return "User";
     }
 
-    printf("Geben Sie Ihren Benutzernamen ein (max. 15 Zeichen): ");
+    printf("Geben Sie Ihren Benutzernamen ein (max. 6 Zeichen): ");
     fflush(stdin);
-    scanf("%15s", name);
+    scanf("%6s", name);
     fflush(stdin);
     return name;
 }

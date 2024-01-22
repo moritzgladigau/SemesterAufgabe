@@ -1,1 +1,0 @@
-Spiel	Datum	Uhrzeit	Spieler	Schwierigkeit	Grösse	Minen Dichte	Spielende	Zeit	Score	Rang

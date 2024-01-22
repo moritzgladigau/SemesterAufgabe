@@ -277,7 +277,7 @@ void tabel_menu(void)
         char activ_input[3];
 
         do{
-                printf("Gib deine Auswahl ein: \n ");
+                printf("Gib deine Auswahl ein: ");
                 scanf("%d", &choice);
 
                 switch (choice) {
@@ -329,7 +329,7 @@ void tabel_menu(void)
                         }
                         break;
                 case 4:
-                        printf("Wonach moechtest du filtern:\n");
+                        printf("Wonach moechtest du filtern: ");
                         printf("1. Win\n");
                         printf("2. Lose\n");
                         scanf("%d", &choice1);
@@ -375,8 +375,8 @@ void scorboard(void)
         }
 
         for (i = 1; i <= high_rank; i++) {
-                sprintf(i_as_char, "%d\n", i);
-                printf("Suche nach Rang: %s\n", i_as_char);
+                sprintf(i_as_char, "%d", i);
+                printf(BOLD UNDERLINE "Suche nach Rang: %s\n" RESET, i_as_char);
                 tabel(RANG, i_as_char);
         }
         free(i_as_char);
@@ -394,4 +394,32 @@ int countDigits(int num) {
                 count++;
         }       
         return count;
+}
+
+void pic_win(void)
+{
+        play_sound("win.mp3");
+        printf("             .");
+        printf("           /|\\                .");
+        printf("          / | \\            ./|\\,");
+        printf("      ,-' \\|/ `-.        <-=O=->");
+        printf("   <'--====--`>       '\\|/`");
+        printf("    `-. /|\\ ,-'           '");
+        printf("      \\ | /");
+        printf("      \\|/   ");
+        printf("       '");
+        printf("Du hast leider verloren!");
+        wait_ticks(2000000000);
+}
+
+void pic_lose(void)
+{
+        printf("        ,--.!,\n");
+        printf("     __/   -*-\n");
+        printf("   ,d08b.  '|`\n");
+        printf("   0088MM     \n");
+        printf("   `9MMP'     \n");
+        printf("\nDu hast leider verloren!\n");
+        play_sound("lose.mp3");
+        wait_ticks(2000000000);
 }
