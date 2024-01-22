@@ -92,10 +92,12 @@ int main(void)
 
         if (check_if_done(game_field, controle_field, width, height) == LOSE) {
                 strcpy(game_end, "Lose");
+                pic_lose();
         } else {
                 strcpy(game_end, "Win");
+                pic_win();
         }
-        wait_ticks(2000000000);
+        // wait_ticks(2000000000);
         play_sound("end.mp3");
         print_field(controle_field, width, height, curser);
         write_log(user_name, difficulty, width, height, percent_mines, game_end, time_difference);

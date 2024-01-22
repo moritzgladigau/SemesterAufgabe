@@ -111,29 +111,9 @@ int check_if_done(char **afield, char **cfield, int width, int height)
                     printf("Du hast gewonnen!\n");
                     founden_mines++;
                     if (founden_mines == total_number_of_mine) {
-                                play_sound("win.mp3");
-                                printf("             .");
-                                printf("           /|\\                .");
-                                printf("          / | \\            ./|\\,");
-                                printf("      ,-' \\|/ `-.        <-=O=->");
-                                printf("   <'--====--`>       '\\|/`");
-                                printf("    `-. /|\\ ,-'           '");
-                                printf("      \\ | /");
-                                printf("      \\|/   ");
-                                printf("       '");
-                                printf("Du hast leider verloren!");
-                                wait_ticks(2000000000);
                             return WIN;
                     }
                 } else if (c == MINE && a == MINE) {
-                        printf("        ,--.!,\n");
-                        printf("     __/   -*-\n");
-                        printf("   ,d08b.  '|`\n");
-                        printf("   0088MM     \n");
-                        printf("   `9MMP'     \n");
-                    printf("\nDu hast leider verloren!\n");
-                    play_sound("lose.mp3");
-                    wait_ticks(2000000000);
                     return LOSE;
                 } else {
                     result = CONTINUE;
