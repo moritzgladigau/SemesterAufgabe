@@ -107,7 +107,6 @@ int check_if_done(char **afield, char **cfield, int width, int height)
             for (j = 0; j < height; j++) {
                 a = afield[i][j];
                 c = cfield[i][j];
-                printf("a==%i==%c\n",i, a);
 
                 if (c == MINE && a == 'f') {
                     printf("Du hast gewonnen!\n");

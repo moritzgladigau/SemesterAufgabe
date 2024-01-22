@@ -242,7 +242,7 @@ int get_rang(int score)
 int set_score(int num_of_field, double percent_mines, double time, int open_field)
 {
         int result;
-        result = (num_of_field * (int) percent_mines) / ((int) time + 1) * open_field;
+        result = (num_of_field * (int) percent_mines * open_field) / ((int) time + 1);
         return result;
 }
 
