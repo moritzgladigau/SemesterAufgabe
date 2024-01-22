@@ -35,9 +35,11 @@ int main(void)
 
         int move = 0;
         int curser[] = {0, 0};
-
         char **game_field;
         char **controle_field;
+        width = 0;
+        height = 0;
+        percent_mines = 0;
         srand(time(NULL));
         
         /* Log Test */

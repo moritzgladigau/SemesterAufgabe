@@ -95,7 +95,6 @@ void fill_field(char **field, int width, int height) {
 }
 
 
-
 int check_if_done(char **afield, char **cfield, int width, int height)
 {
         int i, j, a, c;
@@ -257,4 +256,3 @@ void flush(void)
         char c;
         while ((c = getchar()) != EOF && c != '\n');
 }
-
