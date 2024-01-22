@@ -400,15 +400,15 @@ void pic_win(void)
 {
         play_sound("win.mp3");
         printf("             .");
-        printf("           /|\\                .");
-        printf("          / | \\            ./|\\,");
-        printf("      ,-' \\|/ `-.        <-=O=->");
-        printf("   <'--====--`>       '\\|/`");
-        printf("    `-. /|\\ ,-'           '");
-        printf("      \\ | /");
-        printf("      \\|/   ");
-        printf("       '");
-        printf("Du hast leider verloren!");
+        printf("           /|\\                .\n");
+        printf("          / | \\            ./|\\,\n");
+        printf("      ,-' \\|/ `-.        <-=O=->\n");
+        printf("   <'--====--`>       '\\|/`\n");
+        printf("    `-. /|\\ ,-'           '\n");
+        printf("      \\ | /\n");
+        printf("      \\|/   \n");
+        printf("       '\n");
+        printf("Du hast leider verloren!\n");
         wait_ticks(2000000000);
 }
 
