@@ -32,6 +32,4 @@ int countDigits(int num);
 void pic_win(void);
 void pic_lose(void);
 
-
-
 #endif
