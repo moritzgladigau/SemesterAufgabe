@@ -85,8 +85,7 @@ int main(void)
                 if (move == PROGRAM_FINISH){
                         break;
                 }
-                // clear_screen();
-                printf("Aufgedekt: %i\n", open_field);
+                clear_screen();
         } 
         
         time(&end_time);

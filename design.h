@@ -31,6 +31,8 @@ void tabel_menu_options(void);
 void tabel_menu(void);
 void scorboard(void);
 int countDigits(int num);
+void log_content(void);
+void log_menue(void);
 
 void pic_win(void);
 void pic_lose(void);
