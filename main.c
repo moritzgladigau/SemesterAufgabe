@@ -101,6 +101,8 @@ int main(void)
         // play_sound("end.mp3");
         print_field(controle_field, width, height, curser);
         write_log(user_name, difficulty, width, height, percent_mines, game_end, time_difference);
+        free(controle_field);
+        free(game_field);
 
  return 0;
 }
