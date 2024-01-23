@@ -38,9 +38,6 @@ int main(void)
         char **game_field;
         char **controle_field;
         char *pname;
-        width = 0;
-        height = 0;
-        percent_mines = 0;
         srand(time(NULL));
 	
 	set_terminal_wide();

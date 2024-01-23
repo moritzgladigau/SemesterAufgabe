@@ -33,19 +33,19 @@ void print_field(char **field, int width, int height, int curser[])
         for (i = -1; i <= height; i++) {
                 for (j = 0; j < width; j++) {
                         if (j == 0) {
-                                printf(BLUE);
+                                printf(CYAN);
                                 printf("%c", border);
                                 printf(RESET); /* Print left border */
                         }
 
                         if (i == -1 || i == height) {
-                                printf(BLUE);
+                                printf(CYAN);
                                 printf("%c%c%c", upper_border, upper_border, upper_border);
                                 printf(RESET);  /* Print horizontal border */
                         } else {
                                 if (i >= 0 && i < height && j >= 0 && j < width) {
                                         if (i == curser[1] && j == curser[0]) {
-                                                printf(BLUE);
+                                                printf(CYAN);
                                                 printf("[%c]", field[i][j]);
                                                 printf(RESET);
                                         } else if (field[i][j] == '1')
@@ -55,7 +55,7 @@ void print_field(char **field, int width, int height, int curser[])
                                                 printf(RESET);
                                         } else if (field[i][j] == '2')
                                         {
-                                                printf(BLUE);
+                                                printf(CYAN);
                                                 printf(" %c ", field[i][j]);
                                                 printf(RESET);
                                         } else if (field[i][j] == '3')
@@ -81,7 +81,7 @@ void print_field(char **field, int width, int height, int curser[])
                         }
 
                         if (j == width - 1) {
-                                printf(BLUE);
+                                printf(CYAN);
                                 printf("%c", border);  /* Print right border */
                         }
                 }
@@ -132,7 +132,7 @@ void levels_of_difficulty(void)
         printf(GREEN);
         printf("1. Beginner\n");
         printf(RESET);
-        printf(BLUE);
+        printf(CYAN);
         printf("2. Intermediate\n");
         printf(RESET);
         printf(MAGENTA);
@@ -455,16 +455,18 @@ int countDigits(int num) {
 void pic_win(void)
 {
         play_sound("win.mp3");
-        printf("             .");
-        printf("           /|\\                .\n");
-        printf("          / | \\            ./|\\,\n");
-        printf("      ,-' \\|/ `-.        <-=O=->\n");
-        printf("   <'--====--`>       '\\|/`\n");
-        printf("    `-. /|\\ ,-'           '\n");
-        printf("      \\ | /\n");
-        printf("      \\|/   \n");
+	printf(YELLOW);
+        printf("       .\n");
+        printf("      /|\\             .\n");
+        printf("     / | \\          ./|\\,\n");
+        printf(" ,-' \\|/ `-.       <-=O=->\n");
+        printf(" <'--==0==--`>      '\\|/`\n");
+        printf("  `-. /|\\ ,-'         '\n");
+        printf("    \\ | /\n");
+        printf("     \\|/   \n");
         printf("       '\n");
-        printf("Du hast leider verloren!\n");
+	printf(RESET);
+        printf("Du hast Gewonnen!\n");
         wait_ticks(2000000000);
 }
 

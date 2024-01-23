@@ -231,7 +231,7 @@ int get_rang(int score)
                 
             if (rang <= atoi(get_from_table(i, RANG))) {
                         continue;
-            } else if (score <= atoi(get_from_table(i, SCORE))) {
+            } else if (score >= atoi(get_from_table(i, SCORE))) {
                         rang = atoi(get_from_table(i, RANG));
             }
                 
