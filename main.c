@@ -37,6 +37,7 @@ int main(void)
         int curser[] = {0, 0};
         char **game_field;
         char **controle_field;
+        char *pname;
         width = 0;
         height = 0;
         percent_mines = 0;
@@ -48,12 +49,13 @@ int main(void)
         /* Game */
         spiel_anleitung();
         strcpy(user_name, choose_user_name());
+        pname = user_name;
 
         /* User Input fuer die Größe des Maps und der Mine-Prozentzahl */
         levels_of_difficulty();         /* Display the menu */
         menu_options();
 
-        user_choice(&width, &height, &percent_mines, MAX_HEIGHT, MAX_WIDTH, difficulty);
+        user_choice(&width, &height, &percent_mines, MAX_HEIGHT, MAX_WIDTH, difficulty, pname);
 
         /* Set Controle Field */
         controle_field = field_init(width, height);

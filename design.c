@@ -168,14 +168,13 @@ void print_minesweeper_art(void)
 }
 
 
-void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, int MAX_WIDTH, char *difficulty)
+void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, int MAX_WIDTH, char *difficulty, char *name)
 {
         char choice;
 
         do{
                 /* Get user Choice */
                 scanf("%c", &choice);
-                flush();
                         switch (choice) {
                                 case '1':
                                         printf("Du spielst als Anfaenger!\n");
@@ -223,12 +222,12 @@ void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, 
                                                 printf("Gib die Anzahl an Zeilen ein: (max. %i):", (MAX_WIDTH-2)/3);
                                                 scanf("%i", width);
                                                 flush();
-                                        } while (*width > (MAX_WIDTH-2)/3);
+                                        } while (*width <= 0 || *width > (MAX_WIDTH-2)/3);
                                         do{
                                                 printf("Gib die Anzahl an Spalten ein: (max. %i):", (MAX_HEIGHT-2)/3);
                                                 scanf("%i", height);
                                                 flush();
-                                        } while (*height > (MAX_HEIGHT-2)/3);
+                                        } while (*height <= 0 || *height > (MAX_HEIGHT-2)/3);
                                         do{
                                                 printf("Gib den Minenanteil ein: (min. 1 %%, max. 99 %%):");
                                                 scanf("%f", percent_mines);
@@ -248,9 +247,10 @@ void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, 
                                         flush();
                                         break;
                                 case '5':
+                                        flush();
                                         clear_screen();
                                         tabel_menu_options();
-                                        tabel_menu();
+                                        tabel_menu(name);
                                         levels_of_difficulty();
                                         menu_options();
                                         break;
@@ -279,7 +279,7 @@ void log_content(void)
         printf("ESC. <--Zurueck\n");
 }
 
-void tabel_menu(void)
+void tabel_menu(char *name)
 {
         char choice;
         
@@ -290,8 +290,8 @@ void tabel_menu(void)
                 switch (choice) {
                         case '1':
                                 clear_screen();
-                                printf("Dein Name kann noch nicht geändert werden :(\n");
-                                // strcpy(user_name, choose_user_name());
+                                printf("Dein Aktuella Namme ist: %s\n", name);
+                                strcpy(name, choose_user_name());
                                 break;
                         case '2':
                                 clear_screen();
