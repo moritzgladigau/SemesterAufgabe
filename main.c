@@ -42,7 +42,9 @@ int main(void)
         height = 0;
         percent_mines = 0;
         srand(time(NULL));
-        
+	
+	set_terminal_wide();
+	
         /* Log Test */
         check_if_file_exist();
 

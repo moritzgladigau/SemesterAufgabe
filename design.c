@@ -479,3 +479,15 @@ void pic_lose(void)
         play_sound("lose.mp3");
         wait_ticks(2000000000);
 }
+
+void set_terminal_wide(void)
+{
+	printf("Achte darauf das diese '<===...===>' bei dir in einer Zeile dargestellt wird\n");
+	printf("Sobald dies der Fall ist druecke 'ENTER' um fortzufahren\n");
+	printf("<==================================================================================================================>\n");
+	while (1) {
+		if (getch() == '\n') {
+			break;
+		}
+	}
+}

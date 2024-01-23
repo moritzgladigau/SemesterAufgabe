@@ -33,6 +33,7 @@ void scorboard(void);
 int countDigits(int num);
 void log_content(void);
 void log_menue(void);
+void set_terminal_wide(void);
 
 void pic_win(void);
 void pic_lose(void);
