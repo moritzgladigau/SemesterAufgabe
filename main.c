@@ -96,12 +96,12 @@ int main(void)
 		time(&end_time);
 		time_difference = difftime(end_time, start_time);
 
-		if (check_if_done(game_field, controle_field, width, height) == LOSE) {
-			strcpy(game_end, "Lose");
-                	pic_lose();
-		} else {
+		if (check_if_done(game_field, controle_field, width, height) == WIN) {
 			strcpy(game_end, "Win");
-               		pic_win();
+                	pic_win();
+		} else {
+			strcpy(game_end, "Lose");
+               		pic_lose();
         	}
 		// wait_ticks(2000000000);
 		// play_sound("end.mp3");

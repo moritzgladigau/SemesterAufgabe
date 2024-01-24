@@ -109,7 +109,7 @@ int check_if_done(char **afield, char **cfield, int width, int height)
                 c = cfield[i][j];
 
                 if (c == MINE && a == 'f') {
-                    printf("Du hast gewonnen!\n");
+                    /*printf("Du hast gewonnen!\n");*/
                     founden_mines++;
                     if (founden_mines == total_number_of_mine) {
                             return WIN;
