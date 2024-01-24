@@ -168,7 +168,7 @@ void print_minesweeper_art(void)
 }
 
 
-void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, int MAX_WIDTH, char *difficulty, char *name)
+int user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, int MAX_WIDTH, char *difficulty, char *name)
 {
         char choice;
 
@@ -254,9 +254,12 @@ void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, 
                                         levels_of_difficulty();
                                         menu_options();
                                         break;
+				case 'q':
+					return 0;
                                 
                 } 
         } while (choice != 32);
+	return 1;
 }
 
 void tabel_menu_options(void)
