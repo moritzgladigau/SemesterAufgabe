@@ -110,7 +110,7 @@ char *choose_user_name(void)
         return "User";
     }
 
-    printf("Geben Sie Ihren Benutzernamen ein (max. 6 Zeichen): ");
+    printf("Geben Sie einen Namen ein (max. 6 Zeichen): ");
     fflush(stdin);
     scanf("%6s", name);
     fflush(stdin);

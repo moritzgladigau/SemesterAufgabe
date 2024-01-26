@@ -3,6 +3,7 @@
 #include "design.h"
 #include "log.h"
 #include "sound.h"
+#include "getmap.h"
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
@@ -21,7 +22,7 @@ int height = 8;
 float percent_mines = 15.6;
 int number_of_used_flags;
 char difficulty[13] = "Beginner";
-char user_name[16] = "User";
+char user_name[7] = "User";
 char game_end[5];
 int status = CONTINUE;
 
@@ -36,6 +37,8 @@ int main(void)
         char **controle_field;
         char *pname;
 	char choice;
+	int my_map = 0;
+	char my_map_name[7];
         srand(time(NULL));
 	
 	set_terminal_wide();
@@ -54,7 +57,7 @@ int main(void)
 		menu_options();
 
 
-		if (user_choice(&width, &height, &percent_mines, MAX_HEIGHT, MAX_WIDTH, difficulty, pname) == 0) {
+		if (user_choice(&width, &height, &percent_mines, MAX_HEIGHT, MAX_WIDTH, difficulty, pname, &my_map, my_map_name) == 0) {
 			printf(RED "Das programm wurde Beendet\n");
 			return 0;
 		}
@@ -66,8 +69,15 @@ int main(void)
 			printf("Program finished!!\n");
 			return 0;
 		}
-		place_a_mine(controle_field, percent_mines, width, height);
-		place_numbers(controle_field, width, height);
+
+		if (my_map == 0) {
+			place_a_mine(controle_field, percent_mines, width, height);
+			place_numbers(controle_field, width, height);
+		} else {
+			txt_to_gamefiled(my_map_name, controle_field, width, height);
+			print_field(controle_field, width, height, curser);
+		}
+
 
 		/* Set Game Field */
 		game_field = field_init(width, height);

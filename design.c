@@ -139,11 +139,12 @@ void levels_of_difficulty(void)
         printf("3. Expert\n");
         printf(RESET);
         printf("4. User -defined\n");
+	printf("5. MY-Map\n");
 }
 
 void menu_options(void)
 {
-        printf("5. Einstellungen!\n");
+        printf("6. Einstellungen!\n");
         printf(RED);
         printf("Druecke 'LEERTASTE' und danach 'ENTER' um dass Spiel zu beginnen!\n");
         printf(RESET);
@@ -168,7 +169,7 @@ void print_minesweeper_art(void)
 }
 
 
-int user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, int MAX_WIDTH, char *difficulty, char *name)
+int user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, int MAX_WIDTH, char *difficulty, char *name, int *my_map, char *my_map_name)
 {
         char choice;
 
@@ -177,7 +178,8 @@ int user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, i
                 scanf("%c", &choice);
                         switch (choice) {
                                 case '1':
-                                        printf("Du spielst als Anfaenger!\n");
+					*my_map = 0;
+                                        printf(BOLD "Du spielst als Anfaenger!\n" RESET);
                                         *width = 8;
                                         *height = 8;
                                         *percent_mines = 15.6;
@@ -190,7 +192,8 @@ int user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, i
                                         flush();
                                         break;
                                 case '2':
-                                        printf("Du spielst als Fortgeschrittener!\n");
+					*my_map = 0;
+                                        printf(BOLD "Du spielst als Fortgeschrittener!\n" RESET);
                                         *width = 16;
                                         *height = 16;
                                         *percent_mines = 15.6;
@@ -203,7 +206,8 @@ int user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, i
                                         flush();
                                         break;
                                 case '3':
-                                        printf("Du spielst als Experte!\n");
+					*my_map = 0;				
+                                        printf(BOLD "Du spielst als Experte!\n" RESET);
                                         *width = 30;
                                         *height = 16;
                                         *percent_mines = 20.6;
@@ -216,7 +220,8 @@ int user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, i
                                         flush();
                                         break;
                                 case '4':
-                                        printf("Du spielst Nuter-Definiert!\n");
+					*my_map = 0;
+                                        printf(BOLD "Du spielst Nuter-Definiert!\n" RESET);
                                         strcpy(difficulty, "User-defined");
                                         do{
                                                 printf("Gib die Anzahl an Zeilen ein: (max. %i):", (MAX_WIDTH-2)/3);
@@ -246,7 +251,7 @@ int user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, i
                                         printf("\tMinenanteil:  %.1f%%.\n", *percent_mines);
                                         flush();
                                         break;
-                                case '5':
+                                case '6':
                                         flush();
                                         clear_screen();
                                         tabel_menu_options();
@@ -254,7 +259,26 @@ int user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, i
                                         levels_of_difficulty();
                                         menu_options();
                                         break;
+				case '5':
+					flush();
+					*my_map = 1;
+					printf(BOLD "Du spielst My-Map!\n" RESET);
+					printf("Erstelle eine '.txt' datei welche aus den Zahlen '0 - 8' und 'M' besteht.\n");
+					strcpy(difficulty, "MY-Map");
+					strcpy(my_map_name, choose_user_name());
+					strcat(my_map_name, ".txt");
+					printf("-> %s\n", my_map_name);
+					if (read_field_stats(my_map_name, width, height, percent_mines) == 0) {
+						return 0;
+					}
+					printf("\tKartengroesse: %ix%i.\n", *width, *height);
+                                        printf("\tMinenanteil:  %.1f%%.\n", *percent_mines);
+                                        printf(RED);
+                                        printf("Druecke 'LEERTASTE' und danach 'ENTER' um dass Spiel zu beginnen!\n");
+                                        printf(RESET);
+					break;
 				case 'q':
+
 					return 0;
                                 
                 } 
