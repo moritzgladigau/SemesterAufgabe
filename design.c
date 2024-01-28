@@ -33,19 +33,19 @@ void print_field(char **field, int width, int height, int curser[])
         for (i = -1; i <= height; i++) {
                 for (j = 0; j < width; j++) {
                         if (j == 0) {
-                                printf(BLUE);
+                                printf(CYAN);
                                 printf("%c", border);
                                 printf(RESET); /* Print left border */
                         }
 
                         if (i == -1 || i == height) {
-                                printf(BLUE);
+                                printf(CYAN);
                                 printf("%c%c%c", upper_border, upper_border, upper_border);
                                 printf(RESET);  /* Print horizontal border */
                         } else {
                                 if (i >= 0 && i < height && j >= 0 && j < width) {
                                         if (i == curser[1] && j == curser[0]) {
-                                                printf(BLUE);
+                                                printf(CYAN);
                                                 printf("[%c]", field[i][j]);
                                                 printf(RESET);
                                         } else if (field[i][j] == '1')
@@ -55,7 +55,7 @@ void print_field(char **field, int width, int height, int curser[])
                                                 printf(RESET);
                                         } else if (field[i][j] == '2')
                                         {
-                                                printf(BLUE);
+                                                printf(CYAN);
                                                 printf(" %c ", field[i][j]);
                                                 printf(RESET);
                                         } else if (field[i][j] == '3')
@@ -81,7 +81,7 @@ void print_field(char **field, int width, int height, int curser[])
                         }
 
                         if (j == width - 1) {
-                                printf(BLUE);
+                                printf(CYAN);
                                 printf("%c", border);  /* Print right border */
                         }
                 }
@@ -132,18 +132,19 @@ void levels_of_difficulty(void)
         printf(GREEN);
         printf("1. Beginner\n");
         printf(RESET);
-        printf(BLUE);
+        printf(CYAN);
         printf("2. Intermediate\n");
         printf(RESET);
         printf(MAGENTA);
         printf("3. Expert\n");
         printf(RESET);
         printf("4. User -defined\n");
+	printf("5. MY-Map\n");
 }
 
 void menu_options(void)
 {
-        printf("5. Sieh dir das Log-File an!\n");
+        printf("6. Einstellungen!\n");
         printf(RED);
         printf("Druecke 'LEERTASTE' und danach 'ENTER' um dass Spiel zu beginnen!\n");
         printf(RESET);
@@ -168,16 +169,17 @@ void print_minesweeper_art(void)
 }
 
 
-void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, int MAX_WIDTH, char *difficulty)
+int user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, int MAX_WIDTH, char *difficulty, char *name, int *my_map, char *my_map_name)
 {
         char choice;
 
         do{
-                        /* Get user Choice */
-                        scanf("%c", &choice);
+                /* Get user Choice */
+                scanf("%c", &choice);
                         switch (choice) {
                                 case '1':
-                                        printf("Du spielst als Anfaenger!\n");
+					*my_map = 0;
+                                        printf(BOLD "Du spielst als Anfaenger!\n" RESET);
                                         *width = 8;
                                         *height = 8;
                                         *percent_mines = 15.6;
@@ -190,7 +192,8 @@ void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, 
                                         flush();
                                         break;
                                 case '2':
-                                        printf("Du spielst als Fortgeschrittener!\n");
+					*my_map = 0;
+                                        printf(BOLD "Du spielst als Fortgeschrittener!\n" RESET);
                                         *width = 16;
                                         *height = 16;
                                         *percent_mines = 15.6;
@@ -203,7 +206,8 @@ void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, 
                                         flush();
                                         break;
                                 case '3':
-                                        printf("Du spielst als Experte!\n");
+					*my_map = 0;				
+                                        printf(BOLD "Du spielst als Experte!\n" RESET);
                                         *width = 30;
                                         *height = 16;
                                         *percent_mines = 20.6;
@@ -216,18 +220,19 @@ void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, 
                                         flush();
                                         break;
                                 case '4':
-                                        printf("Du spielst Nuter-Definiert!\n");
+					*my_map = 0;
+                                        printf(BOLD "Du spielst Nuter-Definiert!\n" RESET);
                                         strcpy(difficulty, "User-defined");
                                         do{
                                                 printf("Gib die Anzahl an Zeilen ein: (max. %i):", (MAX_WIDTH-2)/3);
                                                 scanf("%i", width);
                                                 flush();
-                                        } while (*width > (MAX_WIDTH-2)/3);
+                                        } while (*width <= 0 || *width > (MAX_WIDTH-2)/3);
                                         do{
                                                 printf("Gib die Anzahl an Spalten ein: (max. %i):", (MAX_HEIGHT-2)/3);
                                                 scanf("%i", height);
                                                 flush();
-                                        } while (*height > (MAX_HEIGHT-2)/3);
+                                        } while (*height <= 0 || *height > (MAX_HEIGHT-2)/3);
                                         do{
                                                 printf("Gib den Minenanteil ein: (min. 1 %%, max. 99 %%):");
                                                 scanf("%f", percent_mines);
@@ -246,42 +251,113 @@ void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, 
                                         printf("\tMinenanteil:  %.1f%%.\n", *percent_mines);
                                         flush();
                                         break;
-                                case '5':
+                                case '6':
+                                        flush();
                                         clear_screen();
                                         tabel_menu_options();
-                                        tabel_menu();
+                                        tabel_menu(name);
                                         levels_of_difficulty();
                                         menu_options();
                                         break;
+				case '5':
+					flush();
+					*my_map = 1;
+					printf(BOLD "Du spielst My-Map!\n" RESET);
+					printf("Erstelle eine '.txt' datei welche aus den Zahlen '0 - 8' und 'M' besteht.\n");
+					strcpy(difficulty, "MY-Map");
+					strcpy(my_map_name, choose_user_name());
+					strcat(my_map_name, ".txt");
+					printf("-> %s\n", my_map_name);
+					if (read_field_stats(my_map_name, width, height, percent_mines) == 0) {
+						return 0;
+					}
+					printf("\tKartengroesse: %ix%i.\n", *width, *height);
+                                        printf("\tMinenanteil:  %.1f%%.\n", *percent_mines);
+                                        printf(RED);
+                                        printf("Druecke 'LEERTASTE' und danach 'ENTER' um dass Spiel zu beginnen!\n");
+                                        printf(RESET);
+					break;
+				case 'q':
+
+					return 0;
                                 
-                        } 
-                } while (choice != 32);
+                } 
+        } while (choice != 32);
+	return 1;
 }
 
 void tabel_menu_options(void)
 {
-        printf("Menue:\n");
+        printf(BOLD UNDERLINE"Einstellungen/ Log:\n" RESET);
+        printf("1. Username aendern\n");
+        printf("2. Scorboard\n");
+        printf("3. Log durchsuchen\n");
+        printf("ESC. <--Zurueck\n");
+}
+
+void log_content(void)
+{
+        printf(BOLD UNDERLINE"Nach was suchst du?\n"RESET);
         printf("1. DATUM\n");
         printf("2. SPIELER\n");
         printf("3. SCHWIERIGKEIT\n");
         printf("4. SPIELENDE\n");
         printf("5. Scorboard\n");
-        printf("6. <--Zurueck\n");
+        printf("ESC. <--Zurueck\n");
 }
 
-void tabel_menu(void)
+void tabel_menu(char *name)
 {
-        int choice;
-        int choice1;
+        char choice;
+        
+        do {
+                printf(BOLD "Gib deine Auswahl ein: " RESET);
+                scanf("%c", &choice);
+                flush();
+                switch (choice) {
+                        case '1':
+                                clear_screen();
+                                printf("Dein Aktuella Namme ist: %s\n", name);
+                                strcpy(name, choose_user_name());
+                                break;
+                        case '2':
+                                clear_screen();
+                                printf("Scorboard\n");
+                                scorboard();
+                                break;
+                        case '3':
+                                clear_screen();
+                                log_content();
+                                log_menue();
+                                break;
+                        default:
+                                clear_screen();
+                                break;
+                }
+                if (choice != 27) {
+                        printf("\n");
+                        tabel_menu_options();
+                }
+        } while (choice != 27);
+        clear_screen();
+        
+}
+
+
+void log_menue(void)
+{
+        char choice;
+        char choice1;
         char input[16];
         char activ_input[3];
 
         do{
                 printf("Gib deine Auswahl ein: ");
-                scanf("%d", &choice);
-
+                scanf("%c", &choice);
+                flush();
                 switch (choice) {
-                case 1:
+                case '1':
+                        clear_screen();
                         printf("Gebe Nacheinander Tag.Monat.Jahr jeweis zweistellig an:\n");
                         printf("Day: ");
                         scanf("%2s", input);
@@ -303,62 +379,69 @@ void tabel_menu(void)
 
                         tabel(DATUM, input);
                         break;
-                case 2:
+                case '2':
+                        clear_screen();
                         strcpy(input, choose_user_name());
                         tabel(SPIELER, input);
                         break;
-                case 3:
+                case '3':
+                        clear_screen();
                         levels_of_difficulty();
                         printf("Enter your choice (1-4): ");
-                        scanf("%d", &choice1);
+                        scanf("%c", &choice1);
+                        flush();
                         switch (choice1) {
-                        case 1:
+                        case '1':
                                 tabel(SCHWIERIGKEIT, "Beginner");
                                 break;
-                        case 2:
+                        case '2':
                                 tabel(SCHWIERIGKEIT, "Intermediate");
                                 break;
-                        case 3:
+                        case '3':
                                 tabel(SCHWIERIGKEIT, "Expert");
                                 break;
-                        case 4:
+                        case '4':
                                 tabel(SCHWIERIGKEIT, "User-defined");
                                 break;
                         default:
                                 break;
                         }
                         break;
-                case 4:
-                        printf("Wonach moechtest du filtern: ");
+                case '4':
+                        clear_screen();
+                        printf("Wonach moechtest du filtern: \n");
                         printf("1. Win\n");
                         printf("2. Lose\n");
-                        scanf("%d", &choice1);
+                        printf("Enter your choice (1-2): ");
+                        scanf("%c", &choice1);
+                        flush();
                         switch (choice1)
                         {
-                        case 1:
+                        case '1':
                                 tabel(SPIELENDE, "Win");
                                 break;
-                        case 2:
+                        case '2':
                                 tabel(SPIELENDE, "Lose");
                                 break;
                         default:
                                 break;
                         }
                         break;
-                case 5:
+                case '5':
+                        clear_screen();
                         printf("Scorboard\n");
                         scorboard();
                         break;
                 default:
+                        clear_screen();
                         break;
                 }
-                if (choice != 6) {
+                if (choice != 27) {
                         printf("\n");
-                        tabel_menu_options();
-
+                        log_content();
                 }
 
-        } while (choice != 6);
+        } while (choice != 27);
         clear_screen();
 }
 
@@ -399,16 +482,18 @@ int countDigits(int num) {
 void pic_win(void)
 {
         play_sound("win.mp3");
-        printf("             .");
-        printf("           /|\\                .\n");
-        printf("          / | \\            ./|\\,\n");
-        printf("      ,-' \\|/ `-.        <-=O=->\n");
-        printf("   <'--====--`>       '\\|/`\n");
-        printf("    `-. /|\\ ,-'           '\n");
-        printf("      \\ | /\n");
-        printf("      \\|/   \n");
+	printf(YELLOW);
+        printf("       .\n");
+        printf("      /|\\             .\n");
+        printf("     / | \\          ./|\\,\n");
+        printf(" ,-' \\|/ `-.       <-=O=->\n");
+        printf(" <'--==0==--`>      '\\|/`\n");
+        printf("  `-. /|\\ ,-'         '\n");
+        printf("    \\ | /\n");
+        printf("     \\|/   \n");
         printf("       '\n");
-        printf("Du hast leider verloren!\n");
+	printf(RESET);
+        printf("Du hast Gewonnen!\n");
         wait_ticks(2000000000);
 }
 
@@ -422,4 +507,16 @@ void pic_lose(void)
         printf("\nDu hast leider verloren!\n");
         play_sound("lose.mp3");
         wait_ticks(2000000000);
+}
+
+void set_terminal_wide(void)
+{
+	printf("Achte darauf das diese '<===...===>' bei dir in einer Zeile dargestellt wird\n");
+	printf("Sobald dies der Fall ist druecke 'ENTER' um fortzufahren\n");
+	printf("<==================================================================================================================>\n");
+	while (1) {
+		if (getch() == '\n') {
+			break;
+		}
+	}
 }
