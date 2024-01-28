@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "the-game.h"
+#include "log.h"
+#include "getmap.h"
 
 /* ANSI Escape Codes for text color */
 #define RED     "\x1B[31m"
@@ -14,12 +16,27 @@
 #define CYAN    "\x1B[36m"
 #define RESET   "\x1B[0m"
 
+#define UNDERLINE "\033[4m"
+#define BOLD "\033[1m"
+
 void clear_screen(void);
 void print_field(char **field, int width, int height, int curser[]);
 void spiel_anleitung(void);
 void levels_of_difficulty(void);
-void user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, int MAX_WIDTH);
+void menu_options(void);
+int user_choice(int *width, int *height, float *percent_mines, int MAX_HEIGHT, int MAX_WIDTH, char *difficulty, char *name, int *my_map, char *my_map_name);
+void print_minesweeper_art(void);
+void printCenteredText(const char *text);
 
+void tabel_menu_options(void);
+void tabel_menu(char *name);
+void scorboard(void);
+int countDigits(int num);
+void log_content(void);
+void log_menue(void);
+void set_terminal_wide(void);
 
+void pic_win(void);
+void pic_lose(void);
 
 #endif

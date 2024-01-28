@@ -88,11 +88,32 @@ int curser_move(int width, int height, int curser[], int *number_of_used_flags, 
             return OPEN_KEY;
         }
 
+        if (input == HELP_KEY) {
+            spiel_anleitung();
+            return HELP_KEY;
+        }
+
 
         if (input == PROGRAM_FINISH) {
             printf("\nProgram terminated.\n");
             return PROGRAM_FINISH;
         }
     }
+}
+
+char *choose_user_name(void)
+{
+    char *name = malloc(6 * sizeof(char));
+
+    if (name == NULL) {
+        printf("Memory allocation failed.\n");
+        return "User";
+    }
+
+    printf("Geben Sie einen Namen ein (max. 6 Zeichen): ");
+    fflush(stdin);
+    scanf("%6s", name);
+    fflush(stdin);
+    return name;
 }
 
