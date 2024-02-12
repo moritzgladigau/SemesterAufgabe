@@ -10,7 +10,7 @@ int check_if_file_exist(void)
                 printf("Es wird ein Log File angelegt.\n");
                 file = fopen(FILE_NAME, "w");
                 if (file != NULL) {
-                        printf("Es wurde erfolgreich ein Log file für Sie angelegt.\n");
+                        printf("Es wurde erfolgreich ein Log file fuer Sie angelegt.\n");
                         file = fopen(FILE_NAME, "a");
                         fprintf(file, "Spiel\tDatum\tUhrzeit\tSpieler\tSchwierigkeit\tGrösse\tMinen Dichte\tSpielende\tZeit\tScore\tRang\t~");
                         fclose(file);

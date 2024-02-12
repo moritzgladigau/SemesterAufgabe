@@ -292,7 +292,7 @@ void tabel_menu_options(void)
         printf("1. Username aendern\n");
         printf("2. Scorboard\n");
         printf("3. Log durchsuchen\n");
-        printf("ESC. <--Zurueck\n");
+        printf("BACKSPACE. <--Zurueck\n");
 }
 
 void log_content(void)
@@ -338,7 +338,7 @@ void tabel_menu(char *name)
                         printf("\n");
                         tabel_menu_options();
                 }
-        } while (choice != 27);
+        } while (choice != 8);
         clear_screen();
         
 }
@@ -436,12 +436,12 @@ void log_menue(void)
                         clear_screen();
                         break;
                 }
-                if (choice != 27) {
+                if (choice != 8) {
                         printf("\n");
                         log_content();
                 }
 
-        } while (choice != 27);
+        } while (choice != 8);
         clear_screen();
 }
 
@@ -511,7 +511,7 @@ void pic_lose(void)
 
 void set_terminal_wide(void)
 {
-	printf("Achte darauf das diese '<===...===>' bei dir in einer Zeile dargestellt wird\n");
+	printf("Achte darauf das diese '<===...===>' bei dir in einer Zeile dargestellt wird, wenn das der Fall ist, ist die Breite deines Terminals 120\n");
 	printf("Sobald dies der Fall ist druecke 'ENTER' um fortzufahren\n");
 	printf("<==================================================================================================================>\n");
 	while (1) {

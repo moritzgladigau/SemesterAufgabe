@@ -113,8 +113,7 @@ int main(void)
 			strcpy(game_end, "Lose");
                		pic_lose();
         	}
-		// wait_ticks(2000000000);
-		// play_sound("end.mp3");
+		
 		print_field(controle_field, width, height, curser);
 		write_log(user_name, difficulty, width, height, percent_mines, game_end, time_difference, open_field);
 		free(controle_field);
@@ -127,7 +126,7 @@ int main(void)
 			if (choice == 'n') {
 				printf("Auf Wiedersehen\n");
 				return 0;
-			} else if (choice != 'y') {
+			} else if (choice != 'y' && choice != 'n') {
 				clear_screen();
 				printf("Ungueltige Eingabe!\n");
 			}
